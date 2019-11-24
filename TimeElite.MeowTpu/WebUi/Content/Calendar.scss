@@ -1,0 +1,344 @@
+﻿$base: #555;
+$primary: #222;
+$accent: #B62B10;
+$days: 6;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,100);
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100%;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: $base;
+    background: linear-gradient(45deg, $accent 30%, $primary);
+    background: #e0e0e0;
+    // padding: 4rem;
+}
+
+#app {
+    background: rgba(255,255,255,.9);
+    padding: 2rem 4rem;
+    //  box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,.25);
+    //  border-radius: 10px;
+}
+
+.container {
+    max-width: unset !important;
+}
+
+.legend {
+    display: inline-flex;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    align-items: center;
+
+    li {
+        line-height: 2rem;
+        list-style-type: none;
+        margin-right: 2rem;
+    }
+
+    div {
+        border: 9px solid rgba(0,0,0,.54);
+        border-radius: 3px;
+        width: 0;
+        height: 0;
+        float: left;
+        margin: 6px 5px;
+    }
+
+    .edit {
+        width: 1rem;
+        height: 1rem;
+        background: url(/images/edit.svg);
+        cursor: pointer;
+        display: inline-flex;
+    }
+}
+
+.calendar {
+    & > .title {
+        font-size: 2.5rem;
+        font-weight: 100;
+        margin-bottom: 2rem;
+        color: $primary;
+
+        & > * {
+            display: inline;
+        }
+    }
+
+    .days {
+        list-style: none;
+        margin: 0 0 0 0;
+        padding: 0;
+
+        & > .day.outside {
+            display: none;
+        }
+
+        & > .day.empty {
+            display: none;
+        }
+
+        .events {
+            margin-bottom: 1rem;
+
+            .event {
+                box-sizing: border-box;
+                line-height: 1;
+                font-size: .75rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                background: rgba($accent,.05);
+                color: $accent;
+                padding: .25rem .5rem;
+                margin-bottom: 2px;
+                cursor: pointer;
+                transition: all .1s ease-in-out;
+                border-style: solid;
+                border-width: 0 0 0 3px;
+                min-height: 2rem;
+
+                &:hover, &:focus {
+                    background: rgba($accent,.1);
+                }
+
+                &:active {
+                    color: white;
+                    background: rgba($accent, 1);
+                }
+
+                &.same {
+                    margin-bottom: 0 !important;
+                }
+
+                p {
+                    margin-top: 0;
+                    margin-bottom: .2rem;
+                }
+
+                .time {
+                    opacity: 0.4;
+                    font-weight: bold;
+                    width: 2rem;
+                }
+
+                .type {
+                    float: right;
+                    padding: 0.15rem;
+                    position: relative;
+                    top: -.25rem;
+                    right: -.5rem;
+
+                    &.type-ПР {
+                        background-color: rgba(98,130,32,0.3);
+                    }
+
+                    &.type-ЛК {
+                        background-color: rgba(98,130,32,0.3);
+                    }
+
+                    &.type-ЛБ {
+                        background-color: rgba(148,187,65,0.3);
+                    }
+                }
+
+                .summary {
+                    list-style: none;
+                    padding: 0;
+                    font-size: x-small;
+                    opacity: 0.5;
+                    display: table;
+                    margin-left: 2rem;
+
+                    li {
+                        display: table-row;
+                    }
+
+                    span {
+                        display: table-cell;
+                        padding-right: .2rem;
+                    }
+                }
+            }
+
+            hr {
+                margin: 0.2rem 0;
+            }
+        }
+
+        .date {
+            position: relative;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: .5rem;
+
+            &:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 1px;
+                background: currentColor;
+                opacity: .5;
+            }
+
+            & > * {
+                display: inline-block;
+            }
+
+            .weekday {
+                font-weight: 400;
+                color: $accent;
+                text-transform: uppercase
+            }
+
+            .weekday:after, .day:after {
+                content: ','
+            }
+        }
+    }
+}
+
+@media (min-width : 1024px) {
+    .calendar {
+        border-bottom: 2px solid $accent;
+
+        .days {
+            position: relative;
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            flex-wrap: wrap;
+
+            & > .day {
+                position: relative;
+                font-size: .75rem;
+                margin-bottom: 0;
+                width: 100/6 * 1%;
+                flex-shrink: 0;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: .5rem;
+                    top: 0;
+                    height: 1px;
+                    background: currentColor;
+                    opacity: .5;
+                }
+
+                .date {
+                    position: absolute;
+                    top: 1rem;
+                    font-size: 1rem;
+                    line-height: 1rem;
+
+                    &:after {
+                        display: none;
+                    }
+
+                    .weekday, .month, .year {
+                        display: none;
+                    }
+
+                    .day:after {
+                        content: ''
+                    }
+                }
+
+                &.today {
+                    &:before {
+                        height: 0.5rem !important;
+                    }
+                }
+
+                &.empty {
+                    display: inline-block;
+                }
+
+                &:nth-child(n+1):nth-child(-n+6) {
+                    margin-top: 2rem;
+
+                    &:before {
+                        opacity: 1;
+                        height: 2px;
+                        background: $accent;
+                    }
+
+                    .date {
+                        width: 100%;
+                    }
+
+                    .date .weekday {
+                        display: block;
+                        position: absolute;
+                        top: -3rem;
+                        width: 100%;
+                        overflow: hidden;
+                        text-transform: uppercase;
+                        font-weight: 300;
+                        color: $accent;
+                        text-overflow: ellipsis;
+
+                        &:after {
+                            content: ''
+                        }
+                    }
+                }
+
+
+
+                .events {
+                    box-sizing: border-box;
+                    /*position: absolute;*/
+                    height: 100%;
+                    width: 100%;
+                    padding-top: 2.5rem;
+                    padding-right: .5rem;
+                    overflow: auto;
+
+                    .event {
+                        box-sizing: border-box;
+                        line-height: 1;
+                        font-size: .75rem;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        background: rgba($accent,.05);
+                        color: $accent;
+                        padding: .25rem .5rem;
+                        margin-bottom: 2px;
+                        cursor: pointer;
+                        transition: all .1s ease-in-out;
+
+                        &:hover, &:focus {
+                            background: rgba($accent,.1);
+                        }
+
+                        &:active {
+                            color: white;
+                            background: rgba($accent, 1);
+                        }
+
+                        &.outside {
+                            opacity: 0.6;
+                            color: gray;
+                        }
+                        //            &.first { border-left: 1px solid rgba($accent, .5); }
+                        //            &.last { border-right: 1px solid rgba($accent, .5); }
+                    }
+                }
+            }
+        }
+    }
+}
