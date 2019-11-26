@@ -61,6 +61,12 @@ body {
     }
 }
 
+.selector {
+    i {
+        margin: 0.4rem;
+    }
+}
+
 .calendar {
     & > .title {
         font-size: 2.5rem;

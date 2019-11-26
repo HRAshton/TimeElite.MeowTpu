@@ -43,6 +43,9 @@ body {
     cursor: pointer;
     display: inline-flex; }
 
+.selector i {
+  margin: 0.4rem; }
+
 .calendar > .title {
   font-size: 2.5rem;
   font-weight: 100;

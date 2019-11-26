@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/css/calendar.css",
     "inputFile": "Content/Calendar.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/site.es5.js",
+    "inputFile": "Content/site.js"
   }
 ]

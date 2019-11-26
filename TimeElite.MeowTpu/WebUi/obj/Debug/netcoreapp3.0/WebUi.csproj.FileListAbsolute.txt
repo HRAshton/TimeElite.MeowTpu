@@ -41,5 +41,4 @@ C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\net
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\WebUi.csproj.CopyComplete
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\WebUi.dll
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\WebUi.pdb
-C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\Razor\Pages\PersonalSchedule.cshtml.g.cs
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\RaspTpuIcalConverter.pdb

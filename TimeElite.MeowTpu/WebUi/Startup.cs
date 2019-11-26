@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.Queries.GetCalendarQuery;
 using BusinessLogic.Queries.GetCalendarQuery.InternalModels;
+using BusinessLogic.Queries.GetSelectableItemsQuery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,7 @@ namespace WebUi
             services.AddServerSideBlazor();
 
             services.AddSingleton<GetCalendarQuery>();
+            services.AddSingleton<GetSelectableItemsQuery>();
 
             //services.AddSingleton<CalendarService>();
             //services.AddSingleton<FeedService>();
