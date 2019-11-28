@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using AutoMapper;
 using BusinessLogic.Queries.GetCalendarQuery;
-using BusinessLogic.Queries.GetSelectableItemsQuery;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Caching.Memory;
 using WebUi.Models.Calendar;
 
 namespace WebUi.Pages
@@ -20,12 +17,13 @@ namespace WebUi.Pages
         public CalendarModel CalendarModel { get; set; }
 
         /// <summary>
-        /// Группы, для которых получается расписание.
+        ///     Календарь.
         /// </summary>
-        [BindProperty(SupportsGet = true)]
-        public string[] Groups { get; set; }
+        public string[] Groups { get; set; } = new string[0];
 
-        public IndexModel(IMapper mapper, GetCalendarQuery getCalendarQuery, IMemoryCache memoryCache)
+        [BindProperty(SupportsGet = true)] public string EncodedModel { get; set; } = string.Empty;
+
+        public IndexModel(IMapper mapper, GetCalendarQuery getCalendarQuery)
         {
             CalendarModel = new CalendarModel
             {
@@ -33,35 +31,31 @@ namespace WebUi.Pages
                 Matrix = new CalendarDayModel[2, 6]
             };
 
-            Groups = new string[] { };
-
             _mapper = mapper;
             _getCalendarQuery = getCalendarQuery;
-            _memoryCache = memoryCache;
         }
 
         private readonly IMapper _mapper;
         private readonly GetCalendarQuery _getCalendarQuery;
-        private readonly IMemoryCache _memoryCache;
 
         // ReSharper disable once UnusedMember.Global
         public void OnGet()
         {
-            var viewModel = _memoryCache.GetOrCreate(nameof(CalendarModel), entry =>
-            {
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1);
-                var result = GetSchedule(Groups);
-                
-                return result;
-            });
+            DecodeReceivedModel(); //todo: shadow legend toggler
 
-            CalendarModel = viewModel;
+            CalendarModel = GetSchedule(Groups);
+        }
+
+        private void DecodeReceivedModel()
+        {
+            var groupHashes = EncodedModel.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            Groups = groupHashes;
         }
 
 
-        private CalendarModel GetSchedule(string[] groups)
+        private CalendarModel GetSchedule(string[] groupHashes)
         {
-            var queryResult = _getCalendarQuery.Execute(groups);
+            var queryResult = _getCalendarQuery.Execute(groupHashes);
 
             var calendarModel = queryResult.IsSuccessful
                 ? _mapper.Map<CalendarModel>(queryResult.Data)
@@ -69,23 +63,21 @@ namespace WebUi.Pages
 
             var newMatrix = new CalendarDayModel[2, 6];
             for (var i = 0; i < 2; i++)
+            for (var j = 0; j < 6; j++)
             {
-                for (var j = 0; j < 6; j++)
-                {
-                    newMatrix[i, j] = calendarModel.Matrix[i, j];
-                    newMatrix[i, j].Events = newMatrix[i, j].Events
-                        .GroupBy(x => (x.Date, x.Type, x.Name, x.Color))
-                        .Select(gr =>
-                        {
-                            var model = gr.First();
-                            model.Summary = gr.Select(x => (x.Place, x.Teacher)).ToArray();
+                newMatrix[i, j] = calendarModel.Matrix[i, j];
+                newMatrix[i, j].Events = newMatrix[i, j].Events
+                    .GroupBy(x => (x.Date, x.Type, x.Name, x.Color))
+                    .Select(gr =>
+                    {
+                        var model = gr.First();
+                        model.Summary = gr.Select(x => (x.Place, x.Teacher)).ToArray();
 
-                            return model;
-                        })
-                        .OrderBy(x => x.Date)
-                        .ThenBy(x => x.Color.ToArgb())
-                        .ToList();
-                }
+                        return model;
+                    })
+                    .OrderBy(x => x.Date)
+                    .ThenBy(x => x.Color.ToArgb())
+                    .ToList();
             }
 
             calendarModel.Matrix = newMatrix;

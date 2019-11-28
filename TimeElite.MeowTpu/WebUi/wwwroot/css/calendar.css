@@ -20,51 +20,56 @@ body {
 .container {
   max-width: unset !important; }
 
-.legend {
-  display: inline-flex;
+#legend-show-block, #legend-edit-block {
   padding: 0;
   margin: 0 0 1rem 0;
   align-items: center; }
-  .legend li {
+  #legend-show-block li, #legend-edit-block li {
+    height: 2rem;
     line-height: 2rem;
     list-style-type: none;
     margin-right: 2rem; }
-  .legend div {
-    border: 9px solid rgba(0, 0, 0, 0.54);
-    border-radius: 3px;
-    width: 0;
-    height: 0;
-    float: left;
-    margin: 6px 5px; }
-  .legend .edit {
-    width: 1rem;
-    height: 1rem;
-    background: url(/images/edit.svg);
+    #legend-show-block li div, #legend-edit-block li div {
+      border: 9px solid rgba(0, 0, 0, 0.54);
+      border-radius: 3px;
+      width: 0;
+      height: 0;
+      float: left;
+      margin: 6px 5px; }
+  #legend-show-block #edit-legend, #legend-show-block #save-legend, #legend-edit-block #edit-legend, #legend-edit-block #save-legend {
+    margin-left: 0.5rem;
+    font-size: 1.3rem;
     cursor: pointer;
     display: inline-flex; }
+  #legend-show-block input[type=submit], #legend-edit-block input[type=submit] {
+    border: 0;
+    background: transparent; }
+  #legend-show-block .selectize-control.multi, #legend-edit-block .selectize-control.multi {
+    min-width: 20vw;
+    height: 2.2rem; }
 
-.selector i {
+#selector i {
   margin: 0.4rem; }
 
-.calendar > .title {
+#calendar > .title {
   font-size: 2.5rem;
   font-weight: 100;
   margin-bottom: 2rem;
   color: #222; }
-  .calendar > .title > * {
+  #calendar > .title > * {
     display: inline; }
 
-.calendar .days {
+#calendar #matrix {
   list-style: none;
   margin: 0 0 0 0;
   padding: 0; }
-  .calendar .days > .day.outside {
+  #calendar #matrix > .day.outside {
     display: none; }
-  .calendar .days > .day.empty {
+  #calendar #matrix > .day.empty {
     display: none; }
-  .calendar .days .events {
+  #calendar #matrix .events {
     margin-bottom: 1rem; }
-    .calendar .days .events .event {
+    #calendar #matrix .events .event {
       box-sizing: border-box;
       line-height: 1;
       font-size: .75rem;
@@ -80,52 +85,54 @@ body {
       border-style: solid;
       border-width: 0 0 0 3px;
       min-height: 2rem; }
-      .calendar .days .events .event:hover, .calendar .days .events .event:focus {
+      #calendar #matrix .events .event:hover, #calendar #matrix .events .event:focus {
         background: rgba(182, 43, 16, 0.1); }
-      .calendar .days .events .event:active {
+      #calendar #matrix .events .event:active {
         color: white;
         background: #b62b10; }
-      .calendar .days .events .event.same {
+      #calendar #matrix .events .event.same {
         margin-bottom: 0 !important; }
-      .calendar .days .events .event p {
+      #calendar #matrix .events .event p {
         margin-top: 0;
         margin-bottom: .2rem; }
-      .calendar .days .events .event .time {
+      #calendar #matrix .events .event .time {
         opacity: 0.4;
         font-weight: bold;
         width: 2rem; }
-      .calendar .days .events .event .type {
+      #calendar #matrix .events .event .type {
         float: right;
         padding: 0.15rem;
         position: relative;
         top: -.25rem;
         right: -.5rem; }
-        .calendar .days .events .event .type.type-ПР {
+        #calendar #matrix .events .event .type.type-ПР {
           background-color: rgba(98, 130, 32, 0.3); }
-        .calendar .days .events .event .type.type-ЛК {
+        #calendar #matrix .events .event .type.type-ЛК {
           background-color: rgba(98, 130, 32, 0.3); }
-        .calendar .days .events .event .type.type-ЛБ {
+        #calendar #matrix .events .event .type.type-ЛБ {
           background-color: rgba(148, 187, 65, 0.3); }
-      .calendar .days .events .event .summary {
+        #calendar #matrix .events .event .type.type-СМ {
+          background-color: rgba(154, 205, 50, 0.2); }
+      #calendar #matrix .events .event .summary {
         list-style: none;
         padding: 0;
         font-size: x-small;
         opacity: 0.5;
         display: table;
         margin-left: 2rem; }
-        .calendar .days .events .event .summary li {
+        #calendar #matrix .events .event .summary li {
           display: table-row; }
-        .calendar .days .events .event .summary span {
+        #calendar #matrix .events .event .summary span {
           display: table-cell;
           padding-right: .2rem; }
-    .calendar .days .events hr {
+    #calendar #matrix .events hr {
       margin: 0.2rem 0; }
-  .calendar .days .date {
+  #calendar #matrix .date {
     position: relative;
     font-size: 1.25rem;
     margin-bottom: 1rem;
     padding-bottom: .5rem; }
-    .calendar .days .date:after {
+    #calendar #matrix .date:after {
       content: '';
       position: absolute;
       left: 0;
@@ -134,31 +141,31 @@ body {
       height: 1px;
       background: currentColor;
       opacity: .5; }
-    .calendar .days .date > * {
+    #calendar #matrix .date > * {
       display: inline-block; }
-    .calendar .days .date .weekday {
+    #calendar #matrix .date .weekday {
       font-weight: 400;
       color: #B62B10;
       text-transform: uppercase; }
-    .calendar .days .date .weekday:after, .calendar .days .date .day:after {
+    #calendar #matrix .date .weekday:after, #calendar #matrix .date .day:after {
       content: ','; }
 
 @media (min-width: 1024px) {
-  .calendar {
+  #calendar {
     border-bottom: 2px solid #B62B10; }
-    .calendar .days {
+    #calendar #matrix {
       position: relative;
       display: flex;
       justify-content: flex-start;
       align-items: stretch;
       flex-wrap: wrap; }
-      .calendar .days > .day {
+      #calendar #matrix > .day {
         position: relative;
         font-size: .75rem;
         margin-bottom: 0;
         width: 16.66667%;
         flex-shrink: 0; }
-        .calendar .days > .day:before {
+        #calendar #matrix > .day:before {
           content: '';
           position: absolute;
           left: 0;
@@ -167,30 +174,30 @@ body {
           height: 1px;
           background: currentColor;
           opacity: .5; }
-        .calendar .days > .day .date {
+        #calendar #matrix > .day .date {
           position: absolute;
           top: 1rem;
           font-size: 1rem;
           line-height: 1rem; }
-          .calendar .days > .day .date:after {
+          #calendar #matrix > .day .date:after {
             display: none; }
-          .calendar .days > .day .date .weekday, .calendar .days > .day .date .month, .calendar .days > .day .date .year {
+          #calendar #matrix > .day .date .weekday, #calendar #matrix > .day .date .month, #calendar #matrix > .day .date .year {
             display: none; }
-          .calendar .days > .day .date .day:after {
+          #calendar #matrix > .day .date .day:after {
             content: ''; }
-        .calendar .days > .day.today:before {
+        #calendar #matrix > .day.today:before {
           height: 0.5rem !important; }
-        .calendar .days > .day.empty {
+        #calendar #matrix > .day.empty {
           display: inline-block; }
-        .calendar .days > .day:nth-child(n+1):nth-child(-n+6) {
+        #calendar #matrix > .day:nth-child(n+1):nth-child(-n+6) {
           margin-top: 2rem; }
-          .calendar .days > .day:nth-child(n+1):nth-child(-n+6):before {
+          #calendar #matrix > .day:nth-child(n+1):nth-child(-n+6):before {
             opacity: 1;
             height: 2px;
             background: #B62B10; }
-          .calendar .days > .day:nth-child(n+1):nth-child(-n+6) .date {
+          #calendar #matrix > .day:nth-child(n+1):nth-child(-n+6) .date {
             width: 100%; }
-          .calendar .days > .day:nth-child(n+1):nth-child(-n+6) .date .weekday {
+          #calendar #matrix > .day:nth-child(n+1):nth-child(-n+6) .date .weekday {
             display: block;
             position: absolute;
             top: -3rem;
@@ -200,9 +207,9 @@ body {
             font-weight: 300;
             color: #B62B10;
             text-overflow: ellipsis; }
-            .calendar .days > .day:nth-child(n+1):nth-child(-n+6) .date .weekday:after {
+            #calendar #matrix > .day:nth-child(n+1):nth-child(-n+6) .date .weekday:after {
               content: ''; }
-        .calendar .days > .day .events {
+        #calendar #matrix > .day .events {
           box-sizing: border-box;
           /*position: absolute;*/
           height: 100%;
@@ -210,7 +217,7 @@ body {
           padding-top: 2.5rem;
           padding-right: .5rem;
           overflow: auto; }
-          .calendar .days > .day .events .event {
+          #calendar #matrix > .day .events .event {
             box-sizing: border-box;
             line-height: 1;
             font-size: .75rem;
@@ -223,11 +230,11 @@ body {
             margin-bottom: 2px;
             cursor: pointer;
             transition: all .1s ease-in-out; }
-            .calendar .days > .day .events .event:hover, .calendar .days > .day .events .event:focus {
+            #calendar #matrix > .day .events .event:hover, #calendar #matrix > .day .events .event:focus {
               background: rgba(182, 43, 16, 0.1); }
-            .calendar .days > .day .events .event:active {
+            #calendar #matrix > .day .events .event:active {
               color: white;
               background: #b62b10; }
-            .calendar .days > .day .events .event.outside {
+            #calendar #matrix > .day .events .event.outside {
               opacity: 0.6;
               color: gray; } }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BusinessLogic.Extensions;
 using BusinessLogic.Queries.GetCalendarQuery.InternalModels;
 using Ical.Net;
+using Microsoft.Extensions.Caching.Memory;
 using RaspTpuIcalConverter;
 
 namespace BusinessLogic.Queries.GetCalendarQuery
@@ -17,6 +18,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
     public class GetCalendarQuery : QueryBase<string[], CalendarEntity>
     {
         private readonly RaspTruIcalConverter _raspTruIcalConverter;
+        private readonly IMemoryCache _memoryCache;
 
         private readonly int[] palette =
         {
@@ -29,8 +31,10 @@ namespace BusinessLogic.Queries.GetCalendarQuery
         ///     Конструктор.
         /// </summary>
         /// <param name="httpClient">Http-клиент.</param>
-        public GetCalendarQuery(HttpClient httpClient)
+        /// <param name="memoryCache">TODO</param>
+        public GetCalendarQuery(HttpClient httpClient, IMemoryCache memoryCache)
         {
+            _memoryCache = memoryCache;
             _raspTruIcalConverter = new RaspTruIcalConverter(httpClient);
         }
 
@@ -56,17 +60,23 @@ namespace BusinessLogic.Queries.GetCalendarQuery
             return result;
         }
 
-        private List<(Calendar, Color)> GetCalendars(IReadOnlyList<string> calendarLinks)
+        private List<(Calendar, Color)> GetCalendars(IReadOnlyList<string> groupHashes)
         {
             List<Task<(Calendar, Color)>> tuples = new List<Task<(Calendar, Color)>>();
-            for (var i = 0; i < calendarLinks.Count; i++)
+            for (var i = 0; i < groupHashes.Count; i++)
             {
-                var link = calendarLinks[i];
+                var hash = groupHashes[i];
                 var color = Color.FromArgb(palette[i % palette.Length]);
 
                 var task = Task.Run(() =>
                 {
-                    var calendar = _raspTruIcalConverter.GetByQuery(link, 0, 1);
+                    var calendar = _memoryCache.GetOrCreate($"{hash}", entry =>
+                    {
+                        entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(18); // NOTE: В кэше хранится двухнедельное расписание!
+                        var cal = _raspTruIcalConverter.GetByHash(hash, 0, 1);
+
+                        return cal;
+                    });
 
                     return (calendar, color);
                 });

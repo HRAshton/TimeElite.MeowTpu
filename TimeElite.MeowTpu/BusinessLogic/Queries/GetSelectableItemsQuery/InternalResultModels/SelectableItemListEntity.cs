@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BusinessLogic.Queries.GetSelectableItemsQuery.InternalModels
+namespace BusinessLogic.Queries.GetSelectableItemsQuery.InternalResultModels
 {
     public class SelectableItemListEntity
     {

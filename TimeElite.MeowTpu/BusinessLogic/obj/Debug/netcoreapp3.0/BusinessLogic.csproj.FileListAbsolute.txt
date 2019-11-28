@@ -8,6 +8,8 @@ C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\obj\D
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\BusinessLogic.pdb
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\obj\Debug\netcoreapp3.0\BusinessLogic.dll
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\obj\Debug\netcoreapp3.0\BusinessLogic.pdb
-C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\RaspTpuIcalConverter.dll
-C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\RaspTpuIcalConverter.pdb
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\obj\Debug\netcoreapp3.0\BusinessLogic.csproj.CopyComplete
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Primitives.dll
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Caching.Abstractions.xml
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Primitives.xml

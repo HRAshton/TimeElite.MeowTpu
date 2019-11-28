@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BusinessLogic.Queries.GetCalendarQuery.InternalModels;
-
-namespace BusinessLogic.Queries.GetSelectableItemsQuery.InternalModels
+﻿namespace BusinessLogic.Queries.GetSelectableItemsQuery.InternalResultModels
 {
     public class SelectableItemEntity
     {

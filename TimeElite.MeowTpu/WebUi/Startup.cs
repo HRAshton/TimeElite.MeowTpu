@@ -8,11 +8,13 @@ using AutoMapper;
 using BusinessLogic.Queries.GetCalendarQuery;
 using BusinessLogic.Queries.GetCalendarQuery.InternalModels;
 using BusinessLogic.Queries.GetSelectableItemsQuery;
+using BusinessLogic.Queries.GetSelectableItemsQuery.InternalResultModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebUi.Models;
 using WebUi.Models.Calendar;
 
 namespace WebUi
@@ -48,12 +50,9 @@ namespace WebUi
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-
+            
             services.AddSingleton<GetCalendarQuery>();
             services.AddSingleton<GetSelectableItemsQuery>();
-
-            //services.AddSingleton<CalendarService>();
-            //services.AddSingleton<FeedService>();
         }
 
         /// <summary>
@@ -76,7 +75,6 @@ namespace WebUi
             {
                 endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
-                //endpoints.MapFallbackToPage("/_Host");
             });
         }
 
@@ -88,6 +86,11 @@ namespace WebUi
                 cfg.CreateMap<CalendarDayEntity, CalendarDayModel>();
                 cfg.CreateMap<CalendarEventEntity, CalendarEventModel>();
                 cfg.CreateMap<CalendarLegendItemEntity, CalendarLegendItemModel>();
+
+                cfg.CreateMap<SelectableItemEntity, ItemResultModel>()
+                    .ForMember(x => x.Title, x => x.MapFrom(y => y.Text))
+                    .ForMember(x => x.Hash, x => x.MapFrom(
+                        y => y.Url.Replace("/redirect/kalendar.html?hash=", string.Empty)));
             });
             services.AddSingleton<IMapper>(new Mapper(config));
         }

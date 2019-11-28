@@ -3,33 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebUi</title>
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <title>Meow proj</title>
+    <link rel="stylesheet" href="~/css/calendar.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.min.css" integrity="sha256-EhmqrzYSImS7269rfDxk4H+AHDyu/KwV1d8FDgIXScI=" crossorigin="anonymous" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    @*<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">WebUi</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>*@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -38,14 +17,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - WebUi - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2019 - kss20
         </div>
     </footer>
 
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
-    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f4a9c1b4ce.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    
     @RenderSection("Scripts", required: false)
 </body>
 </html>

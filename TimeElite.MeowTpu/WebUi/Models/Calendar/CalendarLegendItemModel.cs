@@ -15,16 +15,16 @@ namespace WebUi.Models.Calendar
         /// <summary>
         /// Имя.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = "[не распознано]";
 
         /// <summary>
         /// Цвет в формате Hex.
         /// </summary>
         public string ColorHex => $"#{Color.R:X2}{Color.G:X2}{Color.B:X2}";
 
-        /// <summary>
-        /// Ссылка на iCal.
-        /// </summary>
-        public string iCalUrl { get; set; }
+        ///// <summary>
+        ///// Ссылка на iCal.
+        ///// </summary>
+        //public string iCalUrl { get; set; }
     }
 }
