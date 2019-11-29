@@ -9,6 +9,7 @@ using BusinessLogic.Queries.GetCalendarQuery;
 using BusinessLogic.Queries.GetCalendarQuery.InternalModels;
 using BusinessLogic.Queries.GetSelectableItemsQuery;
 using BusinessLogic.Queries.GetSelectableItemsQuery.InternalResultModels;
+using Ical.Net.CalendarComponents;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -91,6 +92,13 @@ namespace WebUi
                     .ForMember(x => x.Title, x => x.MapFrom(y => y.Text))
                     .ForMember(x => x.Hash, x => x.MapFrom(
                         y => y.Url.Replace("/redirect/kalendar.html?hash=", string.Empty)));
+
+                cfg.CreateMap<CalendarEvent, CalendarEventEntity>()
+                    .ForMember(x => x.Date, x => x.MapFrom(y => y.DtStart.AsSystemLocal))
+                    .ForMember(x => x.Name, x => x.MapFrom(y => y.Name))
+                    .ForMember(x => x.Place, x => x.MapFrom(y => y.Location))
+                    .ForMember(x => x.Type, x => x.MapFrom(y => y.Categories.SingleOrDefault() ?? string.Empty))
+                    .ForMember(x => x.Teacher, x => x.MapFrom(y => y.Contacts.FirstOrDefault() ?? string.Empty));
             });
             services.AddSingleton<IMapper>(new Mapper(config));
         }

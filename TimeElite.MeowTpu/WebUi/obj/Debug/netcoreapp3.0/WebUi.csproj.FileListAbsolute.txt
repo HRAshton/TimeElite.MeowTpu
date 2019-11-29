@@ -40,7 +40,6 @@ C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\net
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\WebUi.csproj.CopyComplete
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\WebUi.dll
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\WebUi.pdb
-C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\RaspTpuIcalConverter.pdb
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\Microsoft.EntityFrameworkCore.dll
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\Microsoft.EntityFrameworkCore.Relational.dll
@@ -135,3 +134,5 @@ C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\net
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\obj\Debug\netcoreapp3.0\Razor\Pages\Api\Search.cshtml.g.cs
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\Core.dll
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\WebUi\bin\Debug\netcoreapp3.0\Core.pdb

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 
 namespace WebUi.Models.Calendar
@@ -9,6 +10,11 @@ namespace WebUi.Models.Calendar
     public class CalendarEventModel
     {
         /// <summary>
+        ///     Хэш родительского элемента (группы, преподавателя...).
+        /// </summary>
+        public string? HashOfParent { get; set; }
+
+        /// <summary>
         ///     Дата.
         /// </summary>
         public DateTime Date { get; set; }
@@ -16,7 +22,7 @@ namespace WebUi.Models.Calendar
         /// <summary>
         ///     Имя.
         /// </summary>
-        public string Name { get; set; } = "[ не распознано ]";
+        public string Name { get; set; } = "[не распознано]";
 
         /// <summary>
         ///     Цвет.
@@ -51,6 +57,22 @@ namespace WebUi.Models.Calendar
         /// <summary>
         ///     Тип занятия.
         /// </summary>
+        [DisplayFormat(NullDisplayText = "", DataFormatString = "({0})", ConvertEmptyStringToNull = true)]
         public string Type { get; set; } = string.Empty;
+
+        /// <summary>
+        ///     Скрыто ли событие пользователем.
+        /// </summary>
+        public bool IsHiddenByUser { get; set; }
+
+        /// <summary>
+        ///     Является ли окном.
+        /// </summary>
+        public bool IsWindow { get; set; }
+
+        /// <summary>
+        /// Нужно ли затенять.
+        /// </summary>
+        public bool IsShadowed => IsHiddenByUser || IsOutdated || IsWindow;
     }
 }

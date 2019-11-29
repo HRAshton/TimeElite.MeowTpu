@@ -1,15 +1,34 @@
 ﻿(() => {
-    $("#edit-legend").on("click", () => {
+    $("#clear-legend").on("click", () => {
         $("#legend-show-block").css("display", "none");
         $("#legend-edit-block").css("display", "inline-flex");
 
         $(".events").each((_, item) => $(item).children().remove());
+        document.cookie = "link=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     });
 
     $("#save-legend").on("click", () => {
         const hashes = $("#selector").selectize().val();
+        const link = `0;0;${hashes};`;
 
-        document.location.href = `/${hashes}`;
+        document.location.href = `/${link}`;
+    });
+
+    $(".event").each((index, item) => {
+        const hideId = $(item).data("hideid");
+        const currentLink = window.location.href;
+
+        $(item).on(
+            "click",
+            e => {
+                if (currentLink.includes(hideId)) {
+                    window.location.href = window.location.href
+                        .replace(hideId, "")
+                        .replace(",,", ",");
+                } else {
+                    window.location.href += hideId + ",";
+                }
+            });
     });
     
     const selector = $("#selector"); //TODO: only on edit pressed
@@ -31,7 +50,7 @@
         load: function(query, callback) {
             if (!query.length) return callback();
             $.ajax({
-                url: "http://localhost:65222/api/Search?query=" + encodeURIComponent(query),
+                url: `${window.location.origin}/api/Search?query=${encodeURIComponent(query)}`,
                 type: "GET",
                 error: function() {
                     callback();

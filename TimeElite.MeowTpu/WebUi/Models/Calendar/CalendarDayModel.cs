@@ -17,5 +17,25 @@ namespace WebUi.Models.Calendar
         ///     Список событий.
         /// </summary>
         public List<CalendarEventModel> Events { get; set; } = new List<CalendarEventModel>();
+
+        /// <summary>
+        /// Название дня недели.
+        /// </summary>
+        public string Weekday => Date.ToString("dddd");
+
+        /// <summary>
+        /// Название месяца.
+        /// </summary>
+        public string Month => Date.ToString("MMMM");
+
+        /// <summary>
+        /// День месяца.
+        /// </summary>
+        public string Day => Date.Day.ToString();
+
+        /// <summary>
+        /// Год.
+        /// </summary>
+        public string Year => Date.Year.ToString();
     }
 }

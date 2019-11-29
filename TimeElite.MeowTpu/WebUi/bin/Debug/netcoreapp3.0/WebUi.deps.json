@@ -2127,12 +2127,30 @@
           "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
+      "TimeElite.RaspTpuIcalConverter/1.1.2": {
+        "dependencies": {
+          "HtmlAgilityPack": "1.11.16",
+          "Ical.Net": "4.1.11",
+          "Newtonsoft.Json": "12.0.3",
+          "System.Reflection.TypeExtensions": "4.6.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/RaspTpuIcalConverter.dll": {
+            "assemblyVersion": "1.1.2.0",
+            "fileVersion": "1.1.2.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.0/RaspTpuIcalConverter.dll": {}
+        }
+      },
       "BusinessLogic/1.0.0": {
         "dependencies": {
           "AutoMapper": "9.0.0",
+          "Core": "1.0.0",
           "Microsoft.Extensions.DependencyInjection": "3.0.1",
           "Newtonsoft.Json": "12.0.3",
-          "TimeElite.RaspTpuIcalConverter": "1.1.1"
+          "TimeElite.RaspTpuIcalConverter": "1.1.2"
         },
         "runtime": {
           "BusinessLogic.dll": {}
@@ -2141,18 +2159,12 @@
           "BusinessLogic.dll": {}
         }
       },
-      "TimeElite.RaspTpuIcalConverter/1.1.1": {
-        "dependencies": {
-          "HtmlAgilityPack": "1.11.16",
-          "Ical.Net": "4.1.11",
-          "Newtonsoft.Json": "12.0.3",
-          "System.Reflection.TypeExtensions": "4.6.0"
-        },
+      "Core/1.0.0": {
         "runtime": {
-          "RaspTpuIcalConverter.dll": {}
+          "Core.dll": {}
         },
         "compile": {
-          "RaspTpuIcalConverter.dll": {}
+          "Core.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.0.0.0": {
@@ -4956,12 +4968,19 @@
       "path": "system.xml.xpath.xmldocument/4.3.0",
       "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
     },
+    "TimeElite.RaspTpuIcalConverter/1.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/w/MdJPVpajBWcAf+Ps3Wi+33XRowSMBIbkvGwkB+7mUCRm6fr16Zc6GkWegMTsVucuProXoLmLMJkHideYAYg==",
+      "path": "timeelite.rasptpuicalconverter/1.1.2",
+      "hashPath": "timeelite.rasptpuicalconverter.1.1.2.nupkg.sha512"
+    },
     "BusinessLogic/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "TimeElite.RaspTpuIcalConverter/1.1.1": {
+    "Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

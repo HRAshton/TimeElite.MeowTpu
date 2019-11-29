@@ -28,7 +28,7 @@ body {
     height: 2rem;
     line-height: 2rem;
     list-style-type: none;
-    margin-right: 2rem; }
+    margin-right: 1rem; }
     #legend-show-block li div, #legend-edit-block li div {
       border: 9px solid rgba(0, 0, 0, 0.54);
       border-radius: 3px;
@@ -36,17 +36,25 @@ body {
       height: 0;
       float: left;
       margin: 6px 5px; }
-  #legend-show-block #edit-legend, #legend-show-block #save-legend, #legend-edit-block #edit-legend, #legend-edit-block #save-legend {
+  #legend-show-block #clear-legend, #legend-show-block #save-legend, #legend-edit-block #clear-legend, #legend-edit-block #save-legend {
     margin-left: 0.5rem;
     font-size: 1.3rem;
     cursor: pointer;
     display: inline-flex; }
-  #legend-show-block input[type=submit], #legend-edit-block input[type=submit] {
+  #legend-show-block input[type=button], #legend-edit-block input[type=button] {
     border: 0;
     background: transparent; }
   #legend-show-block .selectize-control.multi, #legend-edit-block .selectize-control.multi {
     min-width: 20vw;
     height: 2.2rem; }
+  #legend-show-block #toggle-windows, #legend-edit-block #toggle-windows {
+    font-size: 1.5ex;
+    text-align: center;
+    line-height: 1;
+    height: 100%; }
+    #legend-show-block #toggle-windows a, #legend-edit-block #toggle-windows a {
+      color: unset;
+      text-decoration: unset; }
 
 #selector i {
   margin: 0.4rem; }
@@ -90,6 +98,14 @@ body {
       #calendar #matrix .events .event:active {
         color: white;
         background: #b62b10; }
+      #calendar #matrix .events .event.outside {
+        opacity: 0.6;
+        color: gray; }
+      #calendar #matrix .events .event.hidden-by-user {
+        opacity: 0.4;
+        color: gray; }
+        #calendar #matrix .events .event.hidden-by-user b {
+          font-style: italic; }
       #calendar #matrix .events .event.same {
         margin-bottom: 0 !important; }
       #calendar #matrix .events .event p {
@@ -234,7 +250,4 @@ body {
               background: rgba(182, 43, 16, 0.1); }
             #calendar #matrix > .day .events .event:active {
               color: white;
-              background: #b62b10; }
-            #calendar #matrix > .day .events .event.outside {
-              opacity: 0.6;
-              color: gray; } }
+              background: #b62b10; } }

@@ -13,3 +13,5 @@ C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\D
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Primitives.dll
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Caching.Abstractions.xml
 C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Primitives.xml
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Core.dll
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\BusinessLogic\bin\Debug\netcoreapp3.0\Core.pdb

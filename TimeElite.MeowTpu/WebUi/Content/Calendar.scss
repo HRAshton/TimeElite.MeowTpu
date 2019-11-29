@@ -40,7 +40,7 @@ body {
         height: 2rem;
         line-height: 2rem;
         list-style-type: none;
-        margin-right: 2rem;
+        margin-right: 1rem;
 
         div {
             border: 9px solid rgba(0,0,0,.54);
@@ -52,14 +52,14 @@ body {
         }
     }
 
-    #edit-legend, #save-legend {
+    #clear-legend, #save-legend {
         margin-left: 0.5rem;
         font-size: 1.3rem;
         cursor: pointer;
         display: inline-flex;
     }
 
-    input[type=submit] {
+    input[type=button] {
         border: 0;
         background: transparent;
     }
@@ -67,6 +67,18 @@ body {
     .selectize-control.multi {
         min-width: 20vw;
         height: 2.2rem;
+    }
+
+    #toggle-windows {
+        font-size: 1.5ex;
+        text-align: center;
+        line-height: 1;
+        height: 100%;
+
+        a {
+            color: unset;
+            text-decoration: unset;
+        }
     }
 }
 
@@ -128,6 +140,20 @@ body {
                 &:active {
                     color: white;
                     background: rgba($accent, 1);
+                }
+
+                &.outside {
+                    opacity: 0.6;
+                    color: gray;
+                }
+
+                &.hidden-by-user {
+                    opacity: 0.4;
+                    color: gray;
+
+                    b {
+                        font-style: italic;
+                    }
                 }
 
                 &.same {
@@ -347,11 +373,6 @@ body {
                         &:active {
                             color: white;
                             background: rgba($accent, 1);
-                        }
-
-                        &.outside {
-                            opacity: 0.6;
-                            color: gray;
                         }
                         //            &.first { border-left: 1px solid rgba($accent, .5); }
                         //            &.last { border-right: 1px solid rgba($accent, .5); }

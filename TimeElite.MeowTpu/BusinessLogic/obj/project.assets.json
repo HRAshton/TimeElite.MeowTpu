@@ -1449,6 +1449,16 @@
         "runtime": {
           "lib/netcoreapp3.0/RaspTpuIcalConverter.dll": {}
         }
+      },
+      "Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "compile": {
+          "bin/placeholder/Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Core.dll": {}
+        }
       }
     }
   },
@@ -5223,11 +5233,17 @@
         "timeelite.rasptpuicalconverter.1.1.2.nupkg.sha512",
         "timeelite.rasptpuicalconverter.nuspec"
       ]
+    },
+    "Core/1.0.0": {
+      "type": "project",
+      "path": "../Core/Core.csproj",
+      "msbuildProject": "../Core/Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
       "AutoMapper >= 9.0.0",
+      "Core >= 1.0.0",
       "Microsoft.Extensions.DependencyInjection >= 3.0.1",
       "Newtonsoft.Json >= 12.0.3",
       "TimeElite.RaspTpuIcalConverter >= 1.1.2"
@@ -5261,7 +5277,11 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Workspaces\\GitHubRoot\\TimeElite.MeowTpu\\TimeElite.MeowTpu\\Core\\Core.csproj": {
+              "projectPath": "C:\\Workspaces\\GitHubRoot\\TimeElite.MeowTpu\\TimeElite.MeowTpu\\Core\\Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

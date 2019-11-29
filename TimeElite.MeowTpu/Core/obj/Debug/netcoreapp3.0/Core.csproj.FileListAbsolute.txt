@@ -1,0 +1,8 @@
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\bin\Debug\netcoreapp3.0\Core.deps.json
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\bin\Debug\netcoreapp3.0\Core.dll
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\bin\Debug\netcoreapp3.0\Core.pdb
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\obj\Debug\netcoreapp3.0\Core.csprojAssemblyReference.cache
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\obj\Debug\netcoreapp3.0\Core.AssemblyInfoInputs.cache
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\obj\Debug\netcoreapp3.0\Core.AssemblyInfo.cs
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\obj\Debug\netcoreapp3.0\Core.dll
+C:\Workspaces\GitHubRoot\TimeElite.MeowTpu\TimeElite.MeowTpu\Core\obj\Debug\netcoreapp3.0\Core.pdb

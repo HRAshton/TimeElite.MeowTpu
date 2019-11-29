@@ -9,6 +9,16 @@ namespace BusinessLogic.Queries.GetCalendarQuery.InternalModels
     public class CalendarEventEntity
     {
         /// <summary>
+        ///     Хэш родительского элемента (пары, преподавателя...).
+        /// </summary>
+        public string? HashOfParent { get; set; }
+
+        /// <summary>
+        ///     Скрыто ли событие пользователем.
+        /// </summary>
+        public bool IsHiddenByUser { get; set; }
+
+        /// <summary>
         ///     Дата.
         /// </summary>
         public DateTime Date { get; set; }
@@ -37,5 +47,10 @@ namespace BusinessLogic.Queries.GetCalendarQuery.InternalModels
         ///     Преподаватель.
         /// </summary>
         public string Teacher { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Является ли окном.
+        /// </summary>
+        public bool IsWindow { get; set; }
     }
 }

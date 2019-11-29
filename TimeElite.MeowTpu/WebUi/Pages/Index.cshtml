@@ -1,5 +1,43 @@
 ﻿@page "{EncodedModel?}"
+@using System.Web
+@using Core.Extensions
+@using Microsoft.AspNetCore.Http.Extensions
+@using WebUi.Models.Calendar
 @model IndexModel
+
+@section Scripts
+{
+    <script src="/js/site.es5.min.js"></script>
+}
+
+@functions {
+
+    private static string GetEventAdditionClasses(CalendarEventModel ev, bool isSame)
+    {
+        var classes = string.Empty;
+        if (isSame) classes += "same ";
+        if (ev.IsShadowed) classes += "outside ";
+        if (ev.IsHiddenByUser) classes += "hidden-by-user ";
+
+        return classes;
+    }
+
+    private static string GetHideId(CalendarEventModel ev)
+    {
+        return $"{ev.HashOfParent}:{(byte) ev.Date.GetWeekType()}:{(byte) ev.Date.DayOfWeek}:{ev.Date.GetLessonIndex()}:{HttpUtility.UrlEncode(ev.Place)}";
+    }
+
+    private string GetToggleWindowLink()
+    {
+        var viewType = (byte) Model.ViewType;
+        var oldShowWindow = Model.ShowWindows ? 1 : 0;
+        var newShowWindow = Model.ShowWindows ? 0 : 1;
+
+        return Request.Path.Value.Replace($"/{viewType};{oldShowWindow};", $"/{viewType};{newShowWindow};");
+    }
+
+}
+
 @{
     ViewData["Title"] = "Расписание";
 }
@@ -14,9 +52,18 @@
                         <div style="border-color: @item.ColorHex"></div> @item.Name.Split(" ").FirstOrDefault()
                     </li>
                 }
-                <li><i id="edit-legend" class="far fa-edit"></i></li>
+                <li>
+                    <input id="clear-legend" type="button" class="far fa-times-circle" value="&#xf057"/>
+                </li>
+                <li id="toggle-windows">
+                    <a href="@GetToggleWindowLink()">
+                        @(Model.ShowWindows ? "Скрыть" : "Показать")
+                        <br/>
+                        окна
+                    </a>
+                </li>
             </ul>
-            
+
             <form id="legend-edit-block" style="display: @(Model.Items.Any() ? "none" : "inline-flex")">
                 <select id="selector" name="items"></select>
                 <input id="save-legend" type="button" class="far fa-check-circle" value="&#xf058"/>
@@ -28,10 +75,10 @@
             {
                 <li class="day @(day.Date.Day == DateTime.Today.Day ? "today" : "")">
                     <div class="date">
-                        <span class="weekday">@day.Date.ToString("dddd")</span>
-                        <span class="month">@day.Date.ToString("MMMM")</span>
-                        <span class="day">@day.Date.Day</span>
-                        <span class="year">@day.Date.Year</span>
+                        <span class="weekday">@day.Weekday</span>
+                        <span class="month">@day.Month</span>
+                        <span class="day">@day.Day</span>
+                        <span class="year">@day.Year</span>
                     </div>
                     <div class="events">
                         @for (var i = 0; i < day.Events.Count; i++)
@@ -39,8 +86,8 @@
                             var isSame = i < day.Events.Count - 1 && day.Events[i].Date == day.Events[i + 1].Date;
                             var ev = day.Events[i];
 
-                            <div class="event first @(isSame ? "same" : "") @(ev.IsOutdated ? "outside" : "")" style="border-color: @ev.ColorHex">
-                                <span class="type type-@ev.Type">(@ev.Type)</span>
+                            <div class="event first @GetEventAdditionClasses(ev, isSame)" style="border-color: @ev.ColorHex" data-hideId="@GetHideId(ev)">
+                                <span class="type type-@ev.Type">@Html.DisplayFor(m => ev.Type)</span>
                                 <p>
                                     <span class="time">@ev.Date.ToString("HH:mm")</span> <b>@ev.Name</b>
                                 </p>
@@ -61,8 +108,3 @@
         </ol>
     </div>
 </div>
-
-@section Scripts
-{
-    <script src="/js/site.es5.min.js"></script>
-}
