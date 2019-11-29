@@ -7,11 +7,19 @@
         document.cookie = "link=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     });
 
-    $("#save-legend").on("click", () => {
-        const hashes = $("#selector").selectize().val();
-        const link = `0;0;${hashes};`;
+    $("form").on("submit",
+        (e) => {
+            const hashes = $("#selector").selectize().val();
+            const link = `0;0;${hashes};`;
 
-        document.location.href = `/${link}`;
+            document.location.href = `/${link}`;
+            
+            e.preventDefault();
+            return false;
+        });
+
+    $("#save-legend").on("click", () => {
+        $("form").submit();
     });
 
     $(".event").each((index, item) => {

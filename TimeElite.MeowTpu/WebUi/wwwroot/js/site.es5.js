@@ -11,11 +11,18 @@
         document.cookie = "link=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     });
 
-    $("#save-legend").on("click", function () {
+    $("form").on("submit", function (e) {
         var hashes = $("#selector").selectize().val();
         var link = "0;0;" + hashes + ";";
 
         document.location.href = "/" + link;
+
+        e.preventDefault();
+        return false;
+    });
+
+    $("#save-legend").on("click", function () {
+        $("form").submit();
     });
 
     $(".event").each(function (index, item) {
