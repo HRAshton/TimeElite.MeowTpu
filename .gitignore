@@ -1,7 +1,13 @@
-TimeElite.MeowTpu/.vs/*
+TimeElite.MeowTpu/.vs
 *.pdb
 *.cache
 *.dtbcache
 *.dll
 *.testlog
-*.dll
+*.exe
+TimeElite.MeowTpu/BusinessLogic/bin
+TimeElite.MeowTpu/BusinessLogic/obj
+TimeElite.MeowTpu/Core/bin
+TimeElite.MeowTpu/Core/obj
+TimeElite.MeowTpu/WebUi/bin
+TimeElite.MeowTpu/WebUi/obj
