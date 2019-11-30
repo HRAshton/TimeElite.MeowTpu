@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessLogic.Queries.GetCalendarQuery.InternalModels
+namespace BusinessLogic.Models
 {
     /// <summary>
     ///     Сущность дня календаря.

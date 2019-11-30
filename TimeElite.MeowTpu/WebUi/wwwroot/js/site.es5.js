@@ -15,7 +15,7 @@
         var hashes = $("#selector").selectize().val();
         var link = "0;0;" + hashes + ";";
 
-        document.location.href = "/" + link;
+        document.location.href = "/?" + link;
 
         e.preventDefault();
         return false;

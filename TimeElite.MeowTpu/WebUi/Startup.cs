@@ -5,8 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLogic.Models;
 using BusinessLogic.Queries.GetCalendarQuery;
-using BusinessLogic.Queries.GetCalendarQuery.InternalModels;
 using BusinessLogic.Queries.GetSelectableItemsQuery;
 using BusinessLogic.Queries.GetSelectableItemsQuery.InternalResultModels;
 using Ical.Net.CalendarComponents;
@@ -54,6 +54,7 @@ namespace WebUi
             
             services.AddSingleton<GetCalendarQuery>();
             services.AddSingleton<GetSelectableItemsQuery>();
+            services.AddApplicationInsightsTelemetry();
         }
 
         /// <summary>
@@ -99,6 +100,9 @@ namespace WebUi
                     .ForMember(x => x.Place, x => x.MapFrom(y => y.Location))
                     .ForMember(x => x.Type, x => x.MapFrom(y => y.Categories.SingleOrDefault() ?? string.Empty))
                     .ForMember(x => x.Teacher, x => x.MapFrom(y => y.Contacts.FirstOrDefault() ?? string.Empty));
+
+                cfg.CreateMap<HidableEventModel, HidableEventEntity>();
+                cfg.CreateMap<HidableEventEntity, HidableEventModel>();
             });
             services.AddSingleton<IMapper>(new Mapper(config));
         }

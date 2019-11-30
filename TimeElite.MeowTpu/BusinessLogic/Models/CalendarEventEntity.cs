@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace BusinessLogic.Queries.GetCalendarQuery.InternalModels
+namespace BusinessLogic.Models
 {
     /// <summary>
     ///     Сущность события календаря.

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace BusinessLogic.Queries.GetCalendarQuery.InternalModels
+namespace BusinessLogic.Models
 {
     /// <summary>
     ///     Сущность элемента легенды.

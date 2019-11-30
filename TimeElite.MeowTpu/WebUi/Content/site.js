@@ -12,7 +12,7 @@
             const hashes = $("#selector").selectize().val();
             const link = `0;0;${hashes};`;
 
-            document.location.href = `/${link}`;
+            document.location.href = `/?${link}`;
             
             e.preventDefault();
             return false;
@@ -21,7 +21,7 @@
     $("#save-legend").on("click", () => {
         $("form").submit();
     });
-
+     
     $(".event").each((index, item) => {
         const hideId = $(item).data("hideid");
         const currentLink = window.location.href;

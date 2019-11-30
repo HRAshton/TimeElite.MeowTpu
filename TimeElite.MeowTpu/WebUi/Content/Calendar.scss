@@ -151,12 +151,17 @@ body {
                 }
 
                 &.hidden-by-user {
-                    opacity: 0.4;
+                    opacity: 0.2;
                     color: gray;
+                    min-height: 0;
 
                     b {
                         font-style: italic;
                     }
+
+                    ol {
+                        display: none;
+                    } 
                 }
 
                 &.same {
@@ -195,6 +200,10 @@ body {
 
                     &.type-СМ {
                         background-color: rgba(154,205,50,0.2);
+                    }
+                    
+                    &.type-КО {
+                        background-color: rgba(150,154,194,0.2);
                     }
                 }
 

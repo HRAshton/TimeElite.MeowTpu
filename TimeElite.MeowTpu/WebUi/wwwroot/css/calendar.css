@@ -105,10 +105,13 @@ body {
         opacity: 0.6;
         color: gray; }
       #calendar #matrix .events .event.hidden-by-user {
-        opacity: 0.4;
-        color: gray; }
+        opacity: 0.2;
+        color: gray;
+        min-height: 0; }
         #calendar #matrix .events .event.hidden-by-user b {
           font-style: italic; }
+        #calendar #matrix .events .event.hidden-by-user ol {
+          display: none; }
       #calendar #matrix .events .event.same {
         margin-bottom: 0 !important; }
       #calendar #matrix .events .event p {
@@ -132,6 +135,8 @@ body {
           background-color: rgba(148, 187, 65, 0.3); }
         #calendar #matrix .events .event .type.type-СМ {
           background-color: rgba(154, 205, 50, 0.2); }
+        #calendar #matrix .events .event .type.type-КО {
+          background-color: rgba(150, 154, 194, 0.2); }
       #calendar #matrix .events .event .summary {
         list-style: none;
         padding: 0;

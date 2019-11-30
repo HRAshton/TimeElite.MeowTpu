@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
-using BusinessLogic.Queries.GetCalendarQuery.InternalModels;
+using BusinessLogic.Models;
 using Core;
 using Core.Extensions;
 using Ical.Net;
@@ -57,7 +57,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
             var calendarMatrix = GetCalendarMatrix(calendars, model.HiddenEvents);
             var legend = GetCalendarLegend(calendars);
 
-            if (model.FeelWindows)
+            if (model.ShowWindows)
                 FeelWindows(ref calendarMatrix);
 
             var result = GetSuccessfulResult(new CalendarEntity
@@ -161,7 +161,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
         }
 
         private static CalendarDayEntity[,] GetCalendarMatrix(ICollection<HashedCalendar> calendars,
-            HiddenEventModel[] hiddenEvents)
+            HidableEventEntity[] hiddenEvents)
         {
             var calendarMatrix = new CalendarDayEntity[2, 7];
 
@@ -173,7 +173,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
             return calendarMatrix;
         }
 
-        private static void AddCalendarEventsToMatrix(HashedCalendar calendar, HiddenEventModel[] hiddenEvents,
+        private static void AddCalendarEventsToMatrix(HashedCalendar calendar, HidableEventEntity[] hiddenEvents,
             ref CalendarDayEntity[,] calendarMatrix)
         {
             var firstMonday = DateTime.Today.StartOfWeek(DayOfWeek.Monday);
@@ -212,7 +212,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
 
         // ReSharper disable once SuggestBaseTypeForParameter
         private static bool IsEventHidden(CalendarEvent calendarEvent, string? calendarHashOfParent,
-            IEnumerable<HiddenEventModel> hiddenEvents)
+            IEnumerable<HidableEventEntity> hiddenEvents)
         {
             var isHidden = hiddenEvents.Any(ev =>
                 ev.ParentItemHash == calendarHashOfParent

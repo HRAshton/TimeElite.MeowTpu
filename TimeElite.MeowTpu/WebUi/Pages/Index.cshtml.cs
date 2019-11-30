@@ -1,39 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using AutoMapper;
+using BusinessLogic.Models;
 using BusinessLogic.Queries.GetCalendarQuery;
-using Core.Enums;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebUi.Enums;
+using WebUi.Models;
 using WebUi.Models.Calendar;
 
 namespace WebUi.Pages
 {
     public class IndexModel : PageModel
     {
-        /// <summary>
-        ///     Календарь.
-        /// </summary>
+        /// <summary>Календарь.</summary>
         public CalendarModel CalendarModel { get; set; }
 
+        /// <summary>Настройки календаря.</summary>
+        public CalendarSettingsModel SettingsModel { get; set; }
+
+
         /// <summary>
-        ///     Календарь.
+        ///     Конструтор.
         /// </summary>
-        public string[] Items { get; set; } = new string[0];
-
-        public HiddenEventModel[] HiddenEvents { get; set; } = new HiddenEventModel[0];
-        public ViewType ViewType { get; set; } = ViewType.Tabled;
-        public bool ShowWindows { get; set; }
-
-
-        [BindProperty(SupportsGet = true)]
-        public string EncodedModel { get; set; } = string.Empty;
-
-
+        /// <param name="mapper">Автомаппер.</param>
+        /// <param name="getCalendarQuery">Запросдля получения календаря.</param>
         public IndexModel(IMapper mapper, GetCalendarQuery getCalendarQuery)
         {
             CalendarModel = new CalendarModel
@@ -51,20 +42,23 @@ namespace WebUi.Pages
         private readonly GetCalendarQuery _getCalendarQuery;
 
 
+        /// <summary>Обработчик запросов пользоателя.</summary>
         // ReSharper disable once UnusedMember.Global
         public void OnGet()
         {
-            if (Request.Path.Value.Length < 3 && Request.Cookies.TryGetValue("link", out var link))
+            var encodedModel = Request.QueryString.Value == string.Empty 
+                ? string.Empty
+                : Request.QueryString.Value.Substring(1);
+            encodedModel = encodedModel.Replace("g=", ""); // поддержка старого формата ссылок.
+            if (encodedModel.Length < 3 && Request.Cookies.TryGetValue("link", out var link))
             {
-                EncodedModel = new Uri(link).LocalPath.Substring(1);
                 Response.Redirect(link);
             }
 
-            DecodeReceivedModel(); //todo: shadow legend toggler
+            SettingsModel = CalendarSettingsModel.Deserialize(encodedModel); //todo: shadow legend toggler
+            CalendarModel = GetSchedule(SettingsModel);
 
-            CalendarModel = GetSchedule(Items, HiddenEvents, ShowWindows);
-
-            if (Items.Any())
+            if (SettingsModel.Items.Any())
             {
                 Response.Cookies.Append("link", Request.GetDisplayUrl());
             }
@@ -74,47 +68,14 @@ namespace WebUi.Pages
             }
         }
 
-        private void DecodeReceivedModel()
-        {
-            var blocks = EncodedModel.Split(";");
 
-            if (blocks.Length != 4)
-            {
-                return;
-            }
-
-            var viewType = (ViewType)Convert.ToByte(blocks[0]);
-
-            var feelWindows = Convert.ToByte(blocks[1]) == 1;
-            var itemHashes = blocks[2].Split(",", StringSplitOptions.RemoveEmptyEntries);
-
-            var hiddenEvents = blocks[3].Split(",", StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => x.Split(":"))
-                .Where(x => x.Length == 5)
-                .Select(x => new HiddenEventModel
-                {
-                    ParentItemHash = x[0],
-                    WeekType = (WeekType)Convert.ToByte(x[1]),
-                    WeekDay = (DayOfWeek)Convert.ToByte(x[2]),
-                    EventIndex = Convert.ToByte(x[3]),
-                    Place = HttpUtility.UrlDecode(x[4])
-                })
-                .ToArray();
-
-            Items = itemHashes;
-            HiddenEvents = hiddenEvents;
-            ViewType = viewType;
-            ShowWindows = feelWindows;
-        }
-
-
-        private CalendarModel GetSchedule(string[] groupHashes, HiddenEventModel[] hiddenEvents, bool feelWindows)
+        private CalendarModel GetSchedule(CalendarSettingsModel settingsModel)
         {
             var queryModel = new GetCalendarQueryModel
             {
-                ItemHashes = groupHashes,
-                HiddenEvents = hiddenEvents,
-                FeelWindows = feelWindows
+                ItemHashes = settingsModel.Items,
+                HiddenEvents = _mapper.Map<List<HidableEventEntity>>(settingsModel.HiddenEvents).ToArray(),
+                ShowWindows = settingsModel.ShowWindows
             };
             var queryResult = _getCalendarQuery.Execute(queryModel);
 
@@ -124,22 +85,22 @@ namespace WebUi.Pages
 
             var newMatrix = new CalendarDayModel[2, 6];
             for (var i = 0; i < 2; i++)
-                for (var j = 0; j < 6; j++)
-                {
-                    newMatrix[i, j] = calendarModel.Matrix[i, j];
-                    newMatrix[i, j].Events = newMatrix[i, j].Events
-                        .GroupBy(x => (x.Date, x.Type, x.Name, x.Color))
-                        .Select(gr =>
-                        {
-                            var model = gr.First();
-                            model.Summary = gr.Select(x => (x.Place, x.Teacher)).ToArray();
+            for (var j = 0; j < 6; j++)
+            {
+                newMatrix[i, j] = calendarModel.Matrix[i, j];
+                newMatrix[i, j].Events = newMatrix[i, j].Events
+                    .GroupBy(x => (x.Date, x.Type, x.Name, x.Color))
+                    .Select(gr =>
+                    {
+                        var model = gr.First();
+                        model.Summary = gr.Select(x => (x.Place, x.Teacher)).ToArray();
 
-                            return model;
-                        })
-                        .OrderBy(x => x.Date)
-                        .ThenBy(x => x.Color.ToArgb())
-                        .ToList();
-                }
+                        return model;
+                    })
+                    .OrderBy(x => x.Date)
+                    .ThenBy(x => x.Color.ToArgb())
+                    .ToList();
+            }
 
             calendarModel.Matrix = newMatrix;
 

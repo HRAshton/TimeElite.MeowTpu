@@ -1,7 +1,6 @@
-﻿@page "{EncodedModel?}"
+﻿@page
 @using System.Web
 @using Core.Extensions
-@using Microsoft.AspNetCore.Http.Extensions
 @using WebUi.Models.Calendar
 @model IndexModel
 
@@ -29,11 +28,11 @@
 
     private string GetToggleWindowLink()
     {
-        var viewType = (byte) Model.ViewType;
-        var oldShowWindow = Model.ShowWindows ? 1 : 0;
-        var newShowWindow = Model.ShowWindows ? 0 : 1;
+        var viewType = (byte) Model.SettingsModel.ViewType;
+        var oldShowWindow = Model.SettingsModel.ShowWindows ? 1 : 0;
+        var newShowWindow = Model.SettingsModel.ShowWindows ? 0 : 1;
 
-        return Request.Path.Value.Replace($"/{viewType};{oldShowWindow};", $"/{viewType};{newShowWindow};");
+        return Request.QueryString.Value.Replace($"?{viewType};{oldShowWindow};", $"?{viewType};{newShowWindow};");
     }
 
 }
@@ -45,7 +44,7 @@
 <div id="app">
     <div id="calendar">
         <div class=".head">
-            <ul id="legend-show-block" style="display: @(!Model.Items.Any() ? "none" : "inline-flex")">
+            <ul id="legend-show-block" style="display: @(!Model.SettingsModel.Items.Any() ? "none" : "inline-flex")">
                 @foreach (var item in Model.CalendarModel.Legend)
                 {
                     <li>
@@ -57,14 +56,14 @@
                 </li>
                 <li id="toggle-windows">
                     <a href="@GetToggleWindowLink()">
-                        @(Model.ShowWindows ? "Скрыть" : "Показать")
+                        @(Model.SettingsModel.ShowWindows ? "Скрыть" : "Показать")
                         <br/>
                         окна
                     </a>
                 </li>
             </ul>
 
-            <form id="legend-edit-block" style="display: @(Model.Items.Any() ? "none" : "inline-flex")">
+            <form id="legend-edit-block" style="display: @(Model.SettingsModel.Items.Any() ? "none" : "inline-flex")">
                 <select id="selector" name="items"></select>
                 <input id="save-legend" type="button" class="far fa-check-circle" value="&#xf058"/>
             </form>

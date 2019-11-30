@@ -3,6 +3,7 @@
     public enum ViewType
     {
         Tabled,
-        Listed
+        Listed,
+        Ical
     }
 }

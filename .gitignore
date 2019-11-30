@@ -11,3 +11,5 @@ TimeElite.MeowTpu/Core/bin
 TimeElite.MeowTpu/Core/obj
 TimeElite.MeowTpu/WebUi/bin
 TimeElite.MeowTpu/WebUi/obj
+*.user
+*.pubxml
