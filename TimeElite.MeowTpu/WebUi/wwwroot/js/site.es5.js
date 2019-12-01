@@ -1,6 +1,15 @@
 ﻿"use strict";
+// ReSharper disable PossiblyUnassignedProperty
 
 (function () {
+    var $ = window.$;
+
+    $("document").on("load", function () {
+        if ($(".today")[0]) {
+            $(".today")[0].scrollIntoView();
+        }
+    });
+
     $("#clear-legend").on("click", function () {
         $("#legend-show-block").css("display", "none");
         $("#legend-edit-block").css("display", "inline-flex");
@@ -38,8 +47,7 @@
         });
     });
 
-    var selector = $("#selector"); //TODO: only on edit pressed
-    selector.selectize({
+    $("#selector").selectize({
         valueField: "hash",
         labelField: "title",
         searchField: "html",
@@ -74,4 +82,5 @@
         }
     });
 })();
+// ReSharper restore PossiblyUnassignedProperty
 

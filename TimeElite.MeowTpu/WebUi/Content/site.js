@@ -1,11 +1,24 @@
-﻿(() => {
-    $("#clear-legend").on("click", () => {
-        $("#legend-show-block").css("display", "none");
-        $("#legend-edit-block").css("display", "inline-flex");
+﻿"use strict";
+// ReSharper disable PossiblyUnassignedProperty
 
-        $(".events").each((_, item) => $(item).children().remove());
-        document.cookie = "link=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-    });
+(() => {
+    const $ = window.$;
+
+    $("document").on("load",
+        () => {
+            if ($(".today")[0]) {
+                $(".today")[0].scrollIntoView();
+            }
+        });
+
+    $("#clear-legend").on("click",
+        () => {
+            $("#legend-show-block").css("display", "none");
+            $("#legend-edit-block").css("display", "inline-flex");
+
+            $(".events").each((_, item) => $(item).children().remove());
+            document.cookie = "link=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        });
 
     $("form").on("submit",
         (e) => {
@@ -13,15 +26,16 @@
             const link = `0;0;${hashes};`;
 
             document.location.href = `/?${link}`;
-            
+
             e.preventDefault();
             return false;
         });
 
-    $("#save-legend").on("click", () => {
-        $("form").submit();
-    });
-     
+    $("#save-legend").on("click",
+        () => {
+            $("form").submit();
+        });
+
     $(".event").each((index, item) => {
         const hideId = $(item).data("hideid");
         const currentLink = window.location.href;
@@ -38,9 +52,8 @@
                 }
             });
     });
-    
-    const selector = $("#selector"); //TODO: only on edit pressed
-    selector.selectize({
+
+    $("#selector").selectize({
         valueField: "hash",
         labelField: "title",
         searchField: "html",
@@ -71,4 +84,4 @@
         }
     });
 })();
-
+// ReSharper restore PossiblyUnassignedProperty
