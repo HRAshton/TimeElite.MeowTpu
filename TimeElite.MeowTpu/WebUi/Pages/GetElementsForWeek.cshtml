@@ -1,0 +1,62 @@
+﻿@page
+@using System.Web
+@using Core.Extensions
+@using WebUi.Models.Calendar
+@model WebUi.Pages.GetElementsForWeek
+@{
+    Layout = null;
+}
+
+@functions {
+
+    private static string GetEventAdditionClasses(CalendarEventModel ev, bool isSame)
+    {
+        var classes = string.Empty;
+        if (isSame) classes += "same ";
+        if (ev.IsShadowed) classes += "outside ";
+        if (ev.IsHiddenByUser) classes += "hidden-by-user ";
+
+        return classes;
+    }
+
+    private static string GetHideId(CalendarEventModel ev)
+    {
+        return $"{ev.HashOfParent}:{(byte)ev.Date.GetWeekType()}:{(byte)ev.Date.DayOfWeek}:{ev.Date.GetLessonIndex()}:{HttpUtility.UrlEncode(ev.Place)}";
+    }
+
+}
+
+@foreach (var day in Model.CalendarModel.Matrix)
+{
+    <li class="day @(day.Date.Day == DateTime.Today.Day ? "today" : "")">
+        <div class="date">
+            <span class="weekday">@day.Weekday</span>
+            <span class="month">@day.Month</span>
+            <span class="day">@day.Day</span>
+            <span class="year">@day.Year</span>
+        </div>
+        <div class="events">
+            @for (var i = 0; i < day.Events.Count; i++)
+            {
+                var isSame = i < day.Events.Count - 1 && day.Events[i].Date == day.Events[i + 1].Date;
+                var ev = day.Events[i];
+
+                <div class="event first @GetEventAdditionClasses(ev, isSame)" style="border-color: @ev.ColorHex" data-hideId="@GetHideId(ev)">
+                    <span class="type type-@ev.Type">@Html.DisplayFor(m => ev.Type)</span>
+                    <p>
+                        <span class="time">@ev.Date.ToString("HH:mm")</span> <b>@ev.Name</b>
+                    </p>
+                    <ol class="summary">
+                        @foreach (var (place, teacher) in ev.Summary)
+                        {
+                            <li>
+                                <span>@place</span>
+                                <span>@teacher</span>
+                            </li>
+                        }
+                    </ol>
+                </div>
+            }
+        </div>
+    </li>
+}

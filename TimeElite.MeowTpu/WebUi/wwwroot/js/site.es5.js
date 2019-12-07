@@ -4,6 +4,8 @@
 (function () {
     var $ = window.$;
 
+    var countOfWeeksAfterCurrent = 1;
+
     $("document").on("load", function () {
         if ($(".today")[0]) {
             $(".today")[0].scrollIntoView();
@@ -44,6 +46,19 @@
             } else {
                 window.location.href += hideId + ",";
             }
+        });
+    });
+
+    $("#next-page").on("click", function () {
+        $("#matrix").empty();
+        $("#matrix").append("<img class=\"spinner\" src=\"/images/loading.svg\"/>");
+
+        var query = document.location.search.replace("?", "");
+        fetch("http://localhost:65222/GetElementsForWeek?" + ++countOfWeeksAfterCurrent + ";" + query).then(function (response) {
+            response.text().then(function (text) {
+                $("#matrix").empty();
+                $("#matrix").append(text);
+            });
         });
     });
 

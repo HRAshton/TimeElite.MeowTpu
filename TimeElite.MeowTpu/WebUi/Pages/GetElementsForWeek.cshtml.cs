@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BusinessLogic.Models;
 using BusinessLogic.Queries.GetCalendarQuery;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebUi.Models;
 using WebUi.Models.Calendar;
 
 namespace WebUi.Pages
 {
-    public class IndexModel : PageModel
+    public class GetElementsForWeek : PageModel
     {
         /// <summary>Календарь.</summary>
         public CalendarModel CalendarModel { get; set; }
@@ -25,7 +25,7 @@ namespace WebUi.Pages
         /// </summary>
         /// <param name="mapper">Автомаппер.</param>
         /// <param name="getCalendarQuery">Запросдля получения календаря.</param>
-        public IndexModel(IMapper mapper, GetCalendarQuery getCalendarQuery)
+        public GetElementsForWeek(IMapper mapper, GetCalendarQuery getCalendarQuery)
         {
             CalendarModel = new CalendarModel
             {
@@ -55,7 +55,7 @@ namespace WebUi.Pages
                 Response.Redirect(link);
             }
 
-            SettingsModel = CalendarSettingsModel.Deserialize(encodedModel); //todo: shadow legend toggler
+            SettingsModel = CalendarSettingsModel.Deserialize(encodedModel);
             CalendarModel = GetSchedule(SettingsModel);
 
             if (SettingsModel.Items.Any())
@@ -76,7 +76,7 @@ namespace WebUi.Pages
                 ItemHashes = settingsModel.Items,
                 HiddenEvents = _mapper.Map<List<HidableEventEntity>>(settingsModel.HiddenEvents).ToArray(),
                 ShowWindows = settingsModel.ShowWindows,
-                CountOfWeeksAfterCurrent = settingsModel.CountOfWeeksAfterCurrent
+                CountOfWeeksAfterCurrent = SettingsModel.CountOfWeeksAfterCurrent
             };
             var queryResult = _getCalendarQuery.Execute(queryModel);
 
@@ -84,8 +84,17 @@ namespace WebUi.Pages
                 ? _mapper.Map<CalendarModel>(queryResult.Data)
                 : new CalendarModel();
 
-            var newMatrix = new CalendarDayModel[2, 6];
-            for (var i = 0; i < 2; i++)
+            var newMatrix = GetMatrixForSite(calendarModel);
+            calendarModel.Matrix = newMatrix;
+
+            return calendarModel;
+        }
+
+        private static CalendarDayModel[,] GetMatrixForSite(CalendarModel calendarModel)
+        {
+            var countOfWeeks = calendarModel.Matrix.GetLength(0);
+            var newMatrix = new CalendarDayModel[countOfWeeks, 6];
+            for (var i = 0; i < countOfWeeks; i++)
             for (var j = 0; j < 6; j++)
             {
                 newMatrix[i, j] = calendarModel.Matrix[i, j];
@@ -103,9 +112,7 @@ namespace WebUi.Pages
                     .ToList();
             }
 
-            calendarModel.Matrix = newMatrix;
-
-            return calendarModel;
+            return newMatrix;
         }
     }
 }

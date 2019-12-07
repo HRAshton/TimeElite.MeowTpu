@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AutoMapper;
 using BusinessLogic.Models;
 using Core;
 using Core.Extensions;
@@ -20,9 +19,8 @@ namespace BusinessLogic.Queries.GetCalendarQuery
     /// </summary>
     public class GetCalendarQuery : QueryBase<GetCalendarQueryModel, CalendarEntity>
     {
-        private readonly RaspTruIcalConverter _raspTruIcalConverter;
         private readonly IMemoryCache _memoryCache;
-        private readonly IMapper _mapper;
+        private readonly RaspTruIcalConverter _raspTruIcalConverter;
 
         private readonly int[] palette =
         {
@@ -36,12 +34,10 @@ namespace BusinessLogic.Queries.GetCalendarQuery
         /// </summary>
         /// <param name="httpClient">Http-клиент.</param>
         /// <param name="memoryCache">TODO</param>
-        /// <param name="mapper"></param>
-        public GetCalendarQuery(HttpClient httpClient, IMemoryCache memoryCache, IMapper mapper)
+        public GetCalendarQuery(HttpClient httpClient, IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
-            _mapper = mapper;
-            _raspTruIcalConverter = new RaspTruIcalConverter(httpClient);
+            _raspTruIcalConverter = new RaspTruIcalConverter(httpClient, memoryCache, TimeSpan.FromHours(18));
         }
 
         /// <summary>
@@ -50,11 +46,11 @@ namespace BusinessLogic.Queries.GetCalendarQuery
         /// <returns>Модель страницы календаря.</returns>
         public override QueryResult<CalendarEntity> Execute(GetCalendarQueryModel model)
         {
-            var calendars = GetCalendars(model.ItemHashes);
+            var calendars = GetCalendars(model.ItemHashes, model.CountOfWeeksAfterCurrent);
 
             calendars = calendars.Where(x => x.Calendar != null).ToList();
 
-            var calendarMatrix = GetCalendarMatrix(calendars, model.HiddenEvents);
+            var calendarMatrix = GetCalendarMatrix(calendars, model.HiddenEvents, model.CountOfWeeksAfterCurrent);
             var legend = GetCalendarLegend(calendars);
 
             if (model.ShowWindows)
@@ -98,9 +94,9 @@ namespace BusinessLogic.Queries.GetCalendarQuery
             }
         }
 
-        private List<HashedCalendar> GetCalendars(IReadOnlyList<string> groupHashes)
+        private List<HashedCalendar> GetCalendars(IReadOnlyList<string> groupHashes, byte countOfTakenWeeks)
         {
-            List<Task<HashedCalendar>> tuples = new List<Task<HashedCalendar>>();
+            var tuples = new List<Task<HashedCalendar>>();
             for (var i = 0; i < groupHashes.Count; i++)
             {
                 var hash = groupHashes[i];
@@ -108,14 +104,14 @@ namespace BusinessLogic.Queries.GetCalendarQuery
 
                 var task = Task.Run(() =>
                 {
-                    var calendar = _memoryCache.GetOrCreate($"{hash}", entry =>
+                    var calendar = _memoryCache.GetOrCreate($"{hash}{countOfTakenWeeks}", entry =>
                     {
                         entry.AbsoluteExpirationRelativeToNow =
-                            TimeSpan.FromHours(18); // NOTE: В кэше хранится двухнедельное расписание!
+                            TimeSpan.FromHours(18);
                         Calendar? cal = null;
                         try
                         {
-                            cal = _raspTruIcalConverter.GetByHash(hash, 0, 1);
+                            cal = _raspTruIcalConverter.GetByHash(hash, 0, 0, countOfTakenWeeks);
                         }
                         catch (Exception)
                         {
@@ -161,11 +157,12 @@ namespace BusinessLogic.Queries.GetCalendarQuery
         }
 
         private static CalendarDayEntity[,] GetCalendarMatrix(ICollection<HashedCalendar> calendars,
-            HidableEventEntity[] hiddenEvents)
+            HidableEventEntity[] hiddenEvents, byte countOfWeeksAfterCurrent)
         {
-            var calendarMatrix = new CalendarDayEntity[2, 7];
+            var calendarMatrix = new CalendarDayEntity[countOfWeeksAfterCurrent + 1, 7];
 
-            if (!calendars.Any()) calendars.Add(new HashedCalendar());
+            if (!calendars.Any())
+                calendars.Add(new HashedCalendar());
 
             foreach (var cal in calendars)
                 AddCalendarEventsToMatrix(cal, hiddenEvents, ref calendarMatrix);
@@ -177,9 +174,10 @@ namespace BusinessLogic.Queries.GetCalendarQuery
             ref CalendarDayEntity[,] calendarMatrix)
         {
             var firstMonday = DateTime.Today.StartOfWeek(DayOfWeek.Monday);
-            if (DateTime.Today.DayOfWeek == DayOfWeek.Sunday) firstMonday = firstMonday.AddDays(7);
+            if (DateTime.Today.DayOfWeek == DayOfWeek.Sunday)
+                firstMonday = firstMonday.AddDays(7);
 
-            for (var deltaDay = 0; deltaDay < 2 * 7; deltaDay++)
+            for (var deltaDay = 0; deltaDay < calendarMatrix.Length; deltaDay++)
             {
                 var day = firstMonday.AddDays(deltaDay);
                 var eventEntities = calendar.Calendar?.Events

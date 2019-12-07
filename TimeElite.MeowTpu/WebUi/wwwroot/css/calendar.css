@@ -20,6 +20,28 @@ body {
 .container {
   max-width: unset !important; }
 
+.button-container {
+  width: 100%;
+  text-align: center; }
+  .button-container .button {
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer; }
+    .button-container .button div {
+      width: 0.3rem;
+      border: #b62b10 1px solid; }
+      .button-container .button div:first-of-type {
+        border-right: 0; }
+      .button-container .button div:last-of-type {
+        border-left: 0; }
+    .button-container .button span {
+      text-decoration: dotted; }
+    .button-container .button:hover > * {
+      border-width: 2px; }
+
+#next-page {
+  margin: 0.5rem; }
+
 #legend-show-block, #legend-edit-block {
   padding: 0;
   margin: 0 0 1rem 0;
@@ -29,7 +51,7 @@ body {
     line-height: 2rem;
     list-style-type: none;
     margin-right: 1rem; }
-    #legend-show-block li div, #legend-edit-block li div {
+    #legend-show-block li .legend-item, #legend-edit-block li .legend-item {
       border: 9px solid rgba(0, 0, 0, 0.54);
       border-radius: 3px;
       width: 0;
@@ -173,6 +195,10 @@ body {
       text-transform: uppercase; }
     #calendar #matrix .date .weekday:after, #calendar #matrix .date .day:after {
       content: ','; }
+
+.spinner {
+  width: 100%;
+  height: fit-content; }
 
 @media (min-width: 1024px) {
   #calendar {

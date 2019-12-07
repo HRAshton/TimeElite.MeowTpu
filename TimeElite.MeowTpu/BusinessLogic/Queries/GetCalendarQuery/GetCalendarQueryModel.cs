@@ -9,5 +9,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
         public HidableEventEntity[] HiddenEvents { get; set; } = new HidableEventEntity[0];
 
         public bool ShowWindows { get; set; }
+
+        public byte CountOfWeeksAfterCurrent { get; set; }
     }
 }

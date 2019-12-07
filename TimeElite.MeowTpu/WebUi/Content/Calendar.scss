@@ -23,12 +23,48 @@ body {
 #app {
     background: rgba(255,255,255,.9);
     padding: 2rem 4rem;
-    //  box-shadow: 0 .5rem 1rem 0 rgba(0,0,0,.25);
-    //  border-radius: 10px;
 }
 
 .container {
     max-width: unset !important;
+}
+
+.button-container {
+    width: 100%;
+    text-align: center;
+
+    .button {
+        display: inline-flex;
+        text-decoration: none;
+        cursor: pointer;
+
+        div {
+            width: 0.3rem;
+            border: #b62b10 1px solid;
+
+            &:first-of-type {
+                border-right: 0;
+            }
+
+            &:last-of-type {
+                border-left: 0;
+            }
+        }
+
+        span {
+            text-decoration: dotted;
+        }
+
+        &:hover {
+            & > * {
+                border-width: 2px;
+            }
+        }
+    }
+}
+
+#next-page {
+    margin: 0.5rem;
 }
 
 #legend-show-block, #legend-edit-block {
@@ -42,7 +78,7 @@ body {
         list-style-type: none;
         margin-right: 1rem;
 
-        div {
+        .legend-item {
             border: 9px solid rgba(0,0,0,.54);
             border-radius: 3px;
             width: 0;
@@ -263,6 +299,11 @@ body {
             }
         }
     }
+}
+
+.spinner {
+    width: 100%;
+    height: fit-content;
 }
 
 @media (min-width : 1024px) {

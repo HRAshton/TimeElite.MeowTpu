@@ -4,6 +4,8 @@
 (() => {
     const $ = window.$;
 
+    let countOfWeeksAfterCurrent = 1;
+
     $("document").on("load",
         () => {
             if ($(".today")[0]) {
@@ -52,6 +54,22 @@
                 }
             });
     });
+
+    $("#next-page").on(
+        "click",
+        () => {
+            $("#matrix").empty();
+            $("#matrix").append("<img class=\"spinner\" src=\"/images/loading.svg\"/>");
+
+            const query = document.location.search.replace("?", "");
+            fetch(`http://localhost:65222/GetElementsForWeek?${++countOfWeeksAfterCurrent};${query}`)
+                .then(function(response) {
+                response.text().then(function(text) {
+                    $("#matrix").empty();
+                    $("#matrix").append(text);
+                });
+            });
+        });
 
     $("#selector").selectize({
         valueField: "hash",
