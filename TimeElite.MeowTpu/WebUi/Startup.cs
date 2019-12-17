@@ -41,12 +41,13 @@ namespace WebUi
         {
             ConfigureAutomapper(services);
 
-            var handler = new HttpClientHandler
-            {
-                Proxy = new WebProxy(new Uri("http://10.0.25.3:8080")) { UseDefaultCredentials = true },
-                DefaultProxyCredentials = CredentialCache.DefaultCredentials
-            };
-            var httpClient = new HttpClient(handler);
+            //var handler = new HttpClientHandler
+            //{
+            //    Proxy = new WebProxy(new Uri("http://10.0.25.3:8080")) { UseDefaultCredentials = true },
+            //    DefaultProxyCredentials = CredentialCache.DefaultCredentials
+            //};
+            //var httpClient = new HttpClient(handler);
+            var httpClient = new HttpClient();
             services.AddSingleton(httpClient);
 
             services.AddRazorPages();

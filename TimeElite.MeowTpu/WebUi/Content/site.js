@@ -62,7 +62,7 @@
             $("#matrix").append("<img class=\"spinner\" src=\"/images/loading.svg\"/>");
 
             const query = document.location.search.replace("?", "");
-            fetch(`http://localhost:65222/GetElementsForWeek?${++countOfWeeksAfterCurrent};${query}`)
+            fetch(`/GetElementsForWeek?${++countOfWeeksAfterCurrent};${query}`)
                 .then(function(response) {
                 response.text().then(function(text) {
                     $("#matrix").empty();

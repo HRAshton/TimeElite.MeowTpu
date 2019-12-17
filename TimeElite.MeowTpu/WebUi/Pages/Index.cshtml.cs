@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using BusinessLogic.Models;
 using BusinessLogic.Queries.GetCalendarQuery;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebUi.Models;
@@ -60,7 +61,7 @@ namespace WebUi.Pages
 
             if (SettingsModel.Items.Any())
             {
-                Response.Cookies.Append("link", Request.GetDisplayUrl());
+                Response.Cookies.Append("link", Request.GetDisplayUrl(), new CookieOptions { MaxAge = TimeSpan.FromDays(365) });
             }
             else
             {
