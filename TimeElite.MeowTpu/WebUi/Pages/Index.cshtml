@@ -35,6 +35,11 @@
         return Request.QueryString.Value.Replace($"?{viewType};{oldShowWindow};", $"?{viewType};{newShowWindow};");
     }
 
+    private string GetGoogleCalendarLink()
+    {
+        return $"{Request.Scheme}://{Request.Host}/Api/GetIcalForGoogleCalendar{Request.QueryString.Value}";
+    }
+
 }
 
 @{
@@ -59,6 +64,14 @@
                         @(Model.SettingsModel.ShowWindows ? "Скрыть" : "Показать")
                         <br />
                         окна
+                    </a>
+                </li>
+                <li id="add-to-google-calendar">
+                    <a>
+                        <i class="fab fa-google"></i>
+                        <i class="far fa-calendar-plus"></i>
+                        <br />
+                        <input value="@GetGoogleCalendarLink()"/>
                     </a>
                 </li>
             </ul>

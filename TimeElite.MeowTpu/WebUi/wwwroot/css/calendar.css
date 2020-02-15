@@ -69,7 +69,7 @@ body {
   #legend-show-block .selectize-control.multi, #legend-edit-block .selectize-control.multi {
     min-width: 20vw;
     height: 2.2rem; }
-  #legend-show-block #toggle-windows, #legend-edit-block #toggle-windows {
+  #legend-show-block #toggle-windows, #legend-show-block #add-to-google-calendar, #legend-edit-block #toggle-windows, #legend-edit-block #add-to-google-calendar {
     font-size: 1.5ex;
     text-align: center;
     line-height: 1;
@@ -77,9 +77,17 @@ body {
     border: 1px purple solid;
     margin-left: .5rem;
     padding: 0.2rem 0.5rem; }
-    #legend-show-block #toggle-windows a, #legend-edit-block #toggle-windows a {
+    #legend-show-block #toggle-windows a, #legend-show-block #add-to-google-calendar a, #legend-edit-block #toggle-windows a, #legend-edit-block #add-to-google-calendar a {
       color: unset;
       text-decoration: unset; }
+    #legend-show-block #toggle-windows input, #legend-show-block #add-to-google-calendar input, #legend-edit-block #toggle-windows input, #legend-edit-block #add-to-google-calendar input {
+      font-size: xx-small;
+      width: 3em;
+      height: 1.5ex;
+      margin: 0;
+      padding: 0; }
+      #legend-show-block #toggle-windows input:focus, #legend-show-block #toggle-windows input:hover, #legend-show-block #add-to-google-calendar input:focus, #legend-show-block #add-to-google-calendar input:hover, #legend-edit-block #toggle-windows input:focus, #legend-edit-block #toggle-windows input:hover, #legend-edit-block #add-to-google-calendar input:focus, #legend-edit-block #add-to-google-calendar input:hover {
+        width: 30em; }
 
 #selector i {
   margin: 0.4rem; }
