@@ -36,11 +36,30 @@
         $("form").submit();
     });
 
-    $(".event").each(function (index, item) {
-        var hideId = $(item).data("hideid");
-        var currentLink = window.location.href;
+    const generateButton = $("#generate-ical-btn");
+    generateButton.on("click", function () {
+        generateButton.disabled = true;
+        generateButton.html("<img class=\"spinner\" style=\"width: 24px; height: 24px\" src=\"/images/loading.svg\"/>");
 
-        $(item).on("click", function (e) {
+        const query = document.location.search.replace("?", "");
+        if (query.includes(";1;")) {
+            alert("Внимание\r\nЕсли включен режим \"Показывать окна\", то в календаре они тоже отобразятся");
+        }
+        fetch("/Api/GenerateIcalLink?" + query).then(function (response) {
+            response.text().then(function (text) {
+                const icalLinkInput = $("#ical-link");
+                generateButton.hide();
+                icalLinkInput.show();
+                icalLinkInput.val(text);
+            });
+        });
+    });
+
+    $(".event").each(function (index, item) {
+        const hideId = $(item).data("hideid");
+        const currentLink = window.location.href;
+ 
+        $(item).on("click", function () {
             if (currentLink.includes(hideId)) {
                 window.location.href = window.location.href.replace(hideId, "").replace(",,", ",");
             } else {
@@ -53,7 +72,7 @@
         $("#matrix").empty();
         $("#matrix").append("<img class=\"spinner\" src=\"/images/loading.svg\"/>");
 
-        var query = document.location.search.replace("?", "");
+        const query = document.location.search.replace("?", "");
         fetch("/GetElementsForWeek?" + ++countOfWeeksAfterCurrent + ";" + query).then(function (response) {
             response.text().then(function (text) {
                 $("#matrix").empty();

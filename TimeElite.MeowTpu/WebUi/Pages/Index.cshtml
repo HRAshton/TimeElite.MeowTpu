@@ -23,21 +23,16 @@
 
     private static string GetHideId(CalendarEventModel ev)
     {
-        return $"{ev.HashOfParent}:{(byte)ev.Date.GetWeekType()}:{(byte)ev.Date.DayOfWeek}:{ev.Date.GetLessonIndex()}:{HttpUtility.UrlEncode(ev.Place)}";
+        return $"{ev.HashOfParent}:{(byte) ev.Date.GetWeekType()}:{(byte) ev.Date.DayOfWeek}:{ev.Date.GetLessonIndex()}:{HttpUtility.UrlEncode(ev.Place)}";
     }
 
     private string GetToggleWindowLink()
     {
-        var viewType = (byte)Model.SettingsModel.ViewType;
+        var viewType = (byte) Model.SettingsModel.ViewType;
         var oldShowWindow = Model.SettingsModel.ShowWindows ? 1 : 0;
         var newShowWindow = Model.SettingsModel.ShowWindows ? 0 : 1;
 
         return Request.QueryString.Value.Replace($"?{viewType};{oldShowWindow};", $"?{viewType};{newShowWindow};");
-    }
-
-    private string GetGoogleCalendarLink()
-    {
-        return $"{Request.Scheme}://{Request.Host}/Api/GetIcalForGoogleCalendar{Request.QueryString.Value}";
     }
 
 }
@@ -57,28 +52,27 @@
                     </li>
                 }
                 <li>
-                    <input id="clear-legend" type="button" class="far fa-times-circle" value="&#xf057" />
+                    <input id="clear-legend" type="button" class="far fa-times-circle" value="&#xf057"/>
                 </li>
                 <li id="toggle-windows">
                     <a href="@GetToggleWindowLink()">
                         @(Model.SettingsModel.ShowWindows ? "Скрыть" : "Показать")
-                        <br />
+                        <br/>
                         окна
                     </a>
                 </li>
                 <li id="add-to-google-calendar">
-                    <a>
-                        <i class="fab fa-google"></i>
-                        <i class="far fa-calendar-plus"></i>
-                        <br />
-                        <input value="@GetGoogleCalendarLink()"/>
-                    </a>
+                    <i class="fab fa-google"></i>
+                    <i class="far fa-calendar-plus"></i>
+                    <br/>
+                    <button id="generate-ical-btn">Получить ссылку</button>
+                    <input style="display: none" id="ical-link" type="url"/>
                 </li>
             </ul>
 
             <form id="legend-edit-block" style="display: @(Model.SettingsModel.Items.Any() ? "none" : "inline-flex")">
                 <select id="selector" name="items"></select>
-                <input id="save-legend" type="button" class="far fa-check-circle" value="&#xf058" />
+                <input id="save-legend" type="button" class="far fa-check-circle" value="&#xf058"/>
             </form>
         </div>
 
