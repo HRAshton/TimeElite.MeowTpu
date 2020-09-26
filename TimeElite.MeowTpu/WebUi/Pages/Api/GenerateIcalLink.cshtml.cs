@@ -24,7 +24,7 @@ namespace WebUi.Pages.Api
         // ReSharper disable once UnusedMember.Global
         public async Task<IActionResult> OnGet()
         {
-            var srcLink = $"{Request.Scheme}://{Request.Host}/Api/GetIcalForGoogleCalendar{Request.QueryString.Value}";
+            var srcLink = $"https://{Request.Host}/Api/GetIcalForGoogleCalendar{Request.QueryString.Value}";
 
             var result = await LinkShortener.GetShortenedLink(srcLink);
 

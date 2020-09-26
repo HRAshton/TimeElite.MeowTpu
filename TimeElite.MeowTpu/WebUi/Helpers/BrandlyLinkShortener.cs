@@ -31,11 +31,6 @@ namespace WebUi.Helpers
 			srcLink = srcLink.Replace("localhost", "localhost.ru");
 #endif
 			
-			if (srcLink.StartsWith("https"))
-			{
-				throw new NotSupportedException("В Brandly разрешены только HTTPS-ссылки.");
-			}
-			
 			var payload = new
 			{
 				destination = srcLink,
