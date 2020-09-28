@@ -5,6 +5,7 @@ using System.Text;
 using AutoMapper;
 using BusinessLogic.Models;
 using BusinessLogic.Queries.GetCalendarQuery;
+using Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -49,8 +50,20 @@ namespace WebUi.Pages.Api
 
             var events = schedule.Matrix
                 .Cast<CalendarDayModel>()
-                .SelectMany(x => x.Events);
-            var resultIcal = GetIcalContent(events);
+                .SelectMany(x => x.Events)
+                .ToArray();
+
+            var hiddenLessonIds = events.Where(x => x.IsHiddenByUser)
+                .Select(x => x.Color.ToString() + x.Date.ToString())
+                .Distinct()
+                .ToArray();
+
+            var filteredEvents = events
+                .DistinctBy(x => x.Color.ToString() + x.Date.ToString())
+                .Where(x => !hiddenLessonIds.Contains(x.Color.ToString() + x.Date.ToString()))
+                .ToArray();
+
+            var resultIcal = GetIcalContent(filteredEvents);
 
             return Content(resultIcal, "text/plain", Encoding.UTF8);
         }
@@ -88,7 +101,7 @@ namespace WebUi.Pages.Api
             return string.Join("\r\n", data);
         }
 
-        private CalendarModel GetSchedule(CalendarSettingsModel settingsModel)
+        private CalendarPageViewModel GetSchedule(CalendarSettingsModel settingsModel)
         {
             var queryModel = new GetCalendarQueryModel
             {
@@ -100,8 +113,8 @@ namespace WebUi.Pages.Api
             var queryResult = _getCalendarQuery.Execute(queryModel);
 
             var calendarModel = queryResult.IsSuccessful
-                ? _mapper.Map<CalendarModel>(queryResult.Data)
-                : new CalendarModel();
+                ? _mapper.Map<CalendarPageViewModel>(queryResult.Data)
+                : new CalendarPageViewModel();
 
             return calendarModel;
         }

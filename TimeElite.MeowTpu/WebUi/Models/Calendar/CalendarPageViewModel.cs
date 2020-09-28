@@ -5,7 +5,7 @@ namespace WebUi.Models.Calendar
     /// <summary>
     ///     Модель календаря.
     /// </summary>
-    public class CalendarModel
+    public class CalendarPageViewModel
     {
         /// <summary>
         ///     Матрица дней календаря.
@@ -16,5 +16,10 @@ namespace WebUi.Models.Calendar
         ///     Легенда.
         /// </summary>
         public List<CalendarLegendItemModel> Legend { get; set; }
+
+        /// <summary>
+        ///     Сообщение об ошибке.
+        /// </summary>
+        public string? ErrorMessage { get; set; }
     }
 }

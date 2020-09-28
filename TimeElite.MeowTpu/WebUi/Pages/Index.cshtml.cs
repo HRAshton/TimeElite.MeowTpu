@@ -15,7 +15,7 @@ namespace WebUi.Pages
     public class IndexModel : PageModel
     {
         /// <summary>Календарь.</summary>
-        public CalendarModel CalendarModel { get; set; }
+        public CalendarPageViewModel CalendarModel { get; set; }
 
         /// <summary>Настройки календаря.</summary>
         public CalendarSettingsModel SettingsModel { get; set; }
@@ -28,7 +28,7 @@ namespace WebUi.Pages
         /// <param name="getCalendarQuery">Запросдля получения календаря.</param>
         public IndexModel(IMapper mapper, GetCalendarQuery getCalendarQuery)
         {
-            CalendarModel = new CalendarModel
+            CalendarModel = new CalendarPageViewModel
             {
                 Legend = new List<CalendarLegendItemModel>(),
                 Matrix = new CalendarDayModel[2, 6]
@@ -70,7 +70,7 @@ namespace WebUi.Pages
         }
 
 
-        private CalendarModel GetSchedule(CalendarSettingsModel settingsModel)
+        private CalendarPageViewModel GetSchedule(CalendarSettingsModel settingsModel)
         {
             var queryModel = new GetCalendarQueryModel
             {
@@ -82,8 +82,14 @@ namespace WebUi.Pages
             var queryResult = _getCalendarQuery.Execute(queryModel);
 
             var calendarModel = queryResult.IsSuccessful
-                ? _mapper.Map<CalendarModel>(queryResult.Data)
-                : new CalendarModel();
+                ? _mapper.Map<CalendarPageViewModel>(queryResult.Data)
+                : new CalendarPageViewModel();
+
+            if (settingsModel.Items.Length > calendarModel.Legend.Count)
+            {
+                calendarModel.ErrorMessage = "Сайт расписания ТПУ не вернул расписание для одной или нескольких групп. " +
+                    "Подождите 30 секунд или пару минут и повторите попытку...";
+            }
 
             var newMatrix = new CalendarDayModel[2, 6];
             for (var i = 0; i < 2; i++)

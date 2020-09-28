@@ -5,12 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BusinessLogic.Models;
-using Core;
 using Core.Extensions;
-using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Microsoft.Extensions.Caching.Memory;
 using RaspTpuIcalConverter;
+using RaspTpuIcalConverter.RaspTpuModels;
 
 namespace BusinessLogic.Queries.GetCalendarQuery
 {
@@ -33,7 +32,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
         ///     Конструктор.
         /// </summary>
         /// <param name="httpClient">Http-клиент.</param>
-        /// <param name="memoryCache">TODO</param>
+        /// <param name="memoryCache">Кэш.</param>
         public GetCalendarQuery(HttpClient httpClient, IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
@@ -53,19 +52,22 @@ namespace BusinessLogic.Queries.GetCalendarQuery
             var calendarMatrix = GetCalendarMatrix(calendars, model.HiddenEvents, model.CountOfWeeksAfterCurrent);
             var legend = GetCalendarLegend(calendars);
 
-            if (model.ShowWindows)
-                FeelWindows(ref calendarMatrix);
+            if (model.ShowWindows && calendars.FirstOrDefault()?.Calendar != null)
+            {
+                FeelWindows(ref calendarMatrix, calendars.First().Calendar!.LessonsTimes);
+            }
 
             var result = GetSuccessfulResult(new CalendarEntity
             {
                 Legend = legend,
-                Matrix = calendarMatrix
+                Matrix = calendarMatrix,
             });
 
             return result;
         }
 
-        private static void FeelWindows(ref CalendarDayEntity[,] calendarMatrix)
+        private static void FeelWindows(ref CalendarDayEntity[,] calendarMatrix,
+            IReadOnlyCollection<(byte Hours, byte Minutes)> calendarLessonsTimes)
         {
             foreach (var calendarDayEntity in calendarMatrix)
             {
@@ -78,17 +80,19 @@ namespace BusinessLogic.Queries.GetCalendarQuery
 
                 var lastLessonIndex = lastLesson.Date.GetLessonIndex();
 
-                foreach (var (index, (hours, minutes)) in Dictionaries.LessonIndexesDictionary.Take(lastLessonIndex))
+                var timesBeforeCurrent = calendarLessonsTimes.Take(lastLessonIndex).ToArray();
+                for (var index = 1; index <= timesBeforeCurrent.Length; index++)
                 {
                     if (calendarDayEntity.Events.Any(ev => ev.Date.GetLessonIndex() == index))
                         break;
 
+                    var (Hours, Minutes) = timesBeforeCurrent[index - 1];
                     calendarDayEntity.Events.Add(new CalendarEventEntity
                     {
                         Color = Color.Transparent,
-                        Date = calendarDayEntity.Date.AddHours(hours).AddMinutes(minutes),
+                        Date = calendarDayEntity.Date.AddHours(Hours).AddMinutes(Minutes),
                         Name = "",
-                        IsWindow = true
+                        IsWindow = true,
                     });
                 }
             }
@@ -106,16 +110,25 @@ namespace BusinessLogic.Queries.GetCalendarQuery
                 {
                     var calendar = _memoryCache.GetOrCreate($"{hash}{countOfTakenWeeks}", entry =>
                     {
-                        entry.AbsoluteExpirationRelativeToNow =
-                            TimeSpan.FromHours(18);
-                        Calendar? cal = null;
-                        try
+                        entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(18);
+                        CalendarWithTimesModel? cal = null;
+                        byte retries = 3;
+
+                        while (cal == null && --retries > 0)
                         {
-                            cal = _raspTruIcalConverter.GetByHash(hash, 0, 0, countOfTakenWeeks);
+                            try
+                            {
+                                cal = _raspTruIcalConverter.GetByHash(hash, 0, 0, countOfTakenWeeks);
+                            }
+                            catch (Exception)
+                            {
+                                Task.Delay(2000);
+                            }
                         }
-                        catch (Exception)
+
+                        if (cal == null)
                         {
-                            // IGNORE
+                            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds(1);
                         }
 
                         return cal;
@@ -228,7 +241,7 @@ namespace BusinessLogic.Queries.GetCalendarQuery
 
             public Color Color { get; set; } = Color.Transparent;
 
-            public Calendar? Calendar { get; set; }
+            public CalendarWithTimesModel? Calendar { get; set; }
         }
     }
 }

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUi", "WebUi\WebUi.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{6B9A6B44-2AED-4B4B-B07B-F7D7F15B2AF7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaspTpuIcalConverter", "..\..\..\..\..\Desktop\TimeElite.RaspTpuParser-master\RaspTpuIcalConverter\RaspTpuIcalConverter.csproj", "{B146990E-C10C-4428-849E-C39B3B11A069}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6B9A6B44-2AED-4B4B-B07B-F7D7F15B2AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B9A6B44-2AED-4B4B-B07B-F7D7F15B2AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B9A6B44-2AED-4B4B-B07B-F7D7F15B2AF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B146990E-C10C-4428-849E-C39B3B11A069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B146990E-C10C-4428-849E-C39B3B11A069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B146990E-C10C-4428-849E-C39B3B11A069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B146990E-C10C-4428-849E-C39B3B11A069}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

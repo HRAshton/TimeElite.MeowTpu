@@ -85,7 +85,7 @@ namespace WebUi
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<CalendarEntity, CalendarModel>();
+                cfg.CreateMap<CalendarEntity, CalendarPageViewModel>();
                 cfg.CreateMap<CalendarDayEntity, CalendarDayModel>();
                 cfg.CreateMap<CalendarEventEntity, CalendarEventModel>();
                 cfg.CreateMap<CalendarLegendItemEntity, CalendarLegendItemModel>();
