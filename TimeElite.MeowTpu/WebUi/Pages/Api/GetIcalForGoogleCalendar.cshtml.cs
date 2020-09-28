@@ -70,13 +70,12 @@ namespace WebUi.Pages.Api
 
             foreach (CalendarEventModel ev in events)
             {
-                var utc = ev.Date.ToUniversalTime();
                 data.AddRange(new []
                 {
                     "BEGIN:VEVENT",
-                    $"DTSTART:{utc:yyyyMMddThhmmddZ}",
-                    $"DTEND:{utc.AddMinutes(95):yyyyMMddThhmmddZ}",
-                    $"DTSTAMP:{utc:yyyyMMddThhmmddZ}",
+                    $"DTSTART:{ev.Date:yyyyMMddTHHmmss}",
+                    $"DTEND:{ev.Date.AddMinutes(95):yyyyMMddTHHmmss}",
+                    $"DTSTAMP:{ev.Date:yyyyMMddTHHmmss}",
                     $"DESCRIPTION:{ev.Teacher}",
                     $"LOCATION:{ev.Place}",
                     $"SUMMARY:{ev.Name} ({ev.Type})",
