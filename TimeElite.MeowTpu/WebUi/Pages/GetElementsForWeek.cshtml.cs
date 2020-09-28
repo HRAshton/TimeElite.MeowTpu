@@ -4,7 +4,6 @@ using AutoMapper;
 using BusinessLogic.Models;
 using BusinessLogic.Queries.GetCalendarQuery;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebUi.Models;
 using WebUi.Models.Calendar;

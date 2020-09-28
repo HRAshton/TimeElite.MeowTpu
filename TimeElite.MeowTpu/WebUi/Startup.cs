@@ -15,7 +15,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebUi.Models;
+using WebUi.Helpers;
+using WebUi.Interfaces;
 using WebUi.Models.Calendar;
 
 namespace WebUi
@@ -41,12 +42,6 @@ namespace WebUi
         {
             ConfigureAutomapper(services);
 
-            //var handler = new HttpClientHandler
-            //{
-            //    Proxy = new WebProxy(new Uri("http://10.0.25.3:8080")) { UseDefaultCredentials = true },
-            //    DefaultProxyCredentials = CredentialCache.DefaultCredentials
-            //};
-            //var httpClient = new HttpClient(handler);
             var httpClient = new HttpClient();
             services.AddSingleton(httpClient);
 
@@ -55,6 +50,8 @@ namespace WebUi
             
             services.AddSingleton<GetCalendarQuery>();
             services.AddSingleton<GetSelectableItemsQuery>();
+            services.AddSingleton<ILinkShortener, BrandlyLinkShortener>();
+            services.AddSingleton(Configuration);
             services.AddApplicationInsightsTelemetry();
         }
 
