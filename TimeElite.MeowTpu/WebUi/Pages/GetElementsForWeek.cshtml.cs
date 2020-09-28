@@ -13,7 +13,7 @@ namespace WebUi.Pages
     public class GetElementsForWeek : PageModel
     {
         /// <summary>Календарь.</summary>
-        public CalendarModel CalendarModel { get; set; }
+        public CalendarPageViewModel CalendarModel { get; set; }
 
         /// <summary>Настройки календаря.</summary>
         public CalendarSettingsModel SettingsModel { get; set; }
@@ -26,7 +26,7 @@ namespace WebUi.Pages
         /// <param name="getCalendarQuery">Запросдля получения календаря.</param>
         public GetElementsForWeek(IMapper mapper, GetCalendarQuery getCalendarQuery)
         {
-            CalendarModel = new CalendarModel
+            CalendarModel = new CalendarPageViewModel
             {
                 Legend = new List<CalendarLegendItemModel>(),
                 Matrix = new CalendarDayModel[2, 6]
@@ -68,7 +68,7 @@ namespace WebUi.Pages
         }
 
 
-        private CalendarModel GetSchedule(CalendarSettingsModel settingsModel)
+        private CalendarPageViewModel GetSchedule(CalendarSettingsModel settingsModel)
         {
             var queryModel = new GetCalendarQueryModel
             {
@@ -80,8 +80,8 @@ namespace WebUi.Pages
             var queryResult = _getCalendarQuery.Execute(queryModel);
 
             var calendarModel = queryResult.IsSuccessful
-                ? _mapper.Map<CalendarModel>(queryResult.Data)
-                : new CalendarModel();
+                ? _mapper.Map<CalendarPageViewModel>(queryResult.Data)
+                : new CalendarPageViewModel();
 
             var newMatrix = GetMatrixForSite(calendarModel);
             calendarModel.Matrix = newMatrix;
@@ -89,7 +89,7 @@ namespace WebUi.Pages
             return calendarModel;
         }
 
-        private static CalendarDayModel[,] GetMatrixForSite(CalendarModel calendarModel)
+        private static CalendarDayModel[,] GetMatrixForSite(CalendarPageViewModel calendarModel)
         {
             var countOfWeeks = calendarModel.Matrix.GetLength(0);
             var newMatrix = new CalendarDayModel[countOfWeeks, 6];

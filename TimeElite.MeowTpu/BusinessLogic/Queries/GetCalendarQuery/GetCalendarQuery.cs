@@ -110,16 +110,25 @@ namespace BusinessLogic.Queries.GetCalendarQuery
                 {
                     var calendar = _memoryCache.GetOrCreate($"{hash}{countOfTakenWeeks}", entry =>
                     {
-                        entry.AbsoluteExpirationRelativeToNow =
-                            TimeSpan.FromHours(18);
+                        entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(18);
                         CalendarWithTimesModel? cal = null;
-                        try
+                        byte retries = 3;
+
+                        while (cal == null && --retries > 0)
                         {
-                            cal = _raspTruIcalConverter.GetByHash(hash, 0, 0, countOfTakenWeeks);
+                            try
+                            {
+                                cal = _raspTruIcalConverter.GetByHash(hash, 0, 0, countOfTakenWeeks);
+                            }
+                            catch (Exception)
+                            {
+                                Task.Delay(2000);
+                            }
                         }
-                        catch (Exception)
+
+                        if (cal == null)
                         {
-                            // IGNORE
+                            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMilliseconds(1);
                         }
 
                         return cal;

@@ -121,4 +121,9 @@
             <div></div>
         </div>
     </div>
+
+    @if (Model.CalendarModel.ErrorMessage != null)
+    {
+        <script>alert("@Html.Raw(Model.CalendarModel.ErrorMessage)")</script>
+    }
 </div>
